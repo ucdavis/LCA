@@ -1,10 +1,16 @@
+import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import express from 'express';
 import knex from 'knex';
 
+import { RunParams } from './methods/lca.model';
+import { lcarun } from './methods/lcarun';
+
 dotenv.config();
 
 const app = express();
+
+app.use(bodyParser.json());
 
 const port = 3000;
 
@@ -21,27 +27,11 @@ const pg = knex({
 
 console.log('connecting to db', process.env.DB_HOST);
 
-interface AnalysisResult {
-  number: number;
-  title: string;
-}
-
-const getRows = async (): Promise<AnalysisResult[]> => {
-  return await pg.table('analysis').where({ title: 'First' });
-};
-
 app.post('/lcarun', async (req, res) => {
-  const params = req.body;
+  const params: RunParams = req.body;
+  const result = await lcarun(params, pg);
 
-  const rows = await getRows();
-
-  const bigNum = Math.max(...rows.map(r => r.number));
-
-  console.log(rows);
-
-  // analysis
-
-  res.json({ success: true, params, rows, bigNum });
+  res.json(result);
 });
 
 app.get('/', (req, res) => res.send('Hello World!!!'));
