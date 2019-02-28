@@ -1,5 +1,8 @@
+import dotenv from 'dotenv';
 import express from 'express';
 import knex from 'knex';
+
+dotenv.config();
 
 const app = express();
 
@@ -9,12 +12,14 @@ const port = 3000;
 const pg = knex({
   client: 'pg',
   connection: {
-    host: '127.0.0.1',
-    user: 'lca',
-    password: 'password',
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
     database: 'lca'
   }
 });
+
+console.log('connecting to db', process.env.DB_HOST);
 
 interface AnalysisResult {
   number: number;
