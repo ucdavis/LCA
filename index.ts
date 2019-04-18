@@ -29,8 +29,9 @@ console.log('connecting to db', process.env.DB_HOST);
 
 app.post('/lcarun', async (req, res) => {
   const params: RunParams = req.body;
+  console.log(req.body);
+  console.log(params);
   const result = await lcarun(params, pg);
-
   res.json(result);
 });
 
