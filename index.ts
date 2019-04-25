@@ -2,9 +2,15 @@ import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import express from 'express';
 import knex from 'knex';
-
+import pg from 'pg';
 import { RunParams } from './methods/lca.model';
 import { lcarun } from './methods/lcarun';
+
+// https://github.com/tgriesser/knex/issues/927
+// to handle high precision numerics
+// otherwise js converts them to strings
+const PG_DECIMAL_OID = 1700;
+pg.types.setTypeParser(PG_DECIMAL_OID, parseFloat);
 
 dotenv.config();
 
@@ -15,7 +21,7 @@ app.use(bodyParser.json());
 const port = 3000;
 
 // https://knexjs.org/
-const pg = knex({
+const db = knex({
   client: 'pg',
   connection: {
     host: process.env.DB_HOST,
@@ -31,7 +37,7 @@ app.post('/lcarun', async (req, res) => {
   const params: RunParams = req.body;
   console.log(req.body);
   console.log(params);
-  const result = await lcarun(params, pg);
+  const result = await lcarun(params, db);
   res.json(result);
 });
 
