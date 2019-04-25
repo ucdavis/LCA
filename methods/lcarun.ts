@@ -19,10 +19,10 @@ const lcarun = async (params: RunParams, db: knex) => {
 };
 
 const processRow = (row: Lci, params: RunParams) => {
-    const result = Number(row.diesel) * Number(params.grindfuel) * Number(params.biomass)
-    + Number(row.diesel) * Number(params.excavatfuel) * Number(params.biomass)
-    + Number(row.transport) * Number(params.distance) * Number(params.biomass) / 1000
-    + Number(row.electricity);
+    const result = row.diesel * params.grindfuel * params.biomass
+    + row.diesel * params.excavatfuel * params.biomass
+    + row.transport * params.distance * params.biomass / 1000
+    + row.electricity;
     console.log(result);
     return (
     result
