@@ -7,15 +7,32 @@ import { RunParams } from './lca.model';
 const lcarun = async (params: RunParams, db: knex) => {
   const rows: Lci[] = await db
     .table('lci_input')
-    .where({ lci_group: 'renewable' });
+    // .where({ lci_group: 'renewable' });
+    .where({ lci_group: 'renewable' }).orWhere({ lci_group: 'nonrenewable' }).orWhere({ lci_group: 'water' });
+  // const nonrenewableRows: Lci[] = await db
+  //   .table('lci_input')
+  //   .where({ lci_group: 'nonrenewable' });
+  // const waterRows: Lci[] = await db
+  //   .table('lci_input')
+  //   .where({ lci_group: 'water' });
 
   // const bigNum = Math.max(...rows.map(r => r.number));
-  let sum = 0;
+  let renewableSum = 0;
+  let nonrenewableSum = 0;
+  let waterSum = 0;
   for (let i = 0; i < rows.length; i++) {
-      sum = sum + processRow(rows[i], params);
+      if (rows[i].lci_group === 'renewable') {
+        renewableSum = renewableSum + processRow(rows[i], params);
+      }
+      if (rows[i].lci_group === 'nonrenewable') {
+        nonrenewableSum = nonrenewableSum + processRow(rows[i], params);
+      }
+      if (rows[i].lci_group === 'water') {
+        waterSum = waterSum + processRow(rows[i], params);
+      }
   }
 
-  return { success: true, params, rows, sum };
+  return { success: true, params, rows, renewableSum, nonrenewableSum, waterSum };
 };
 
 const processRow = (row: Lci, params: RunParams) => {
