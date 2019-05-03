@@ -17,10 +17,15 @@ const unitParams: NonrenewableUnitParams = { 'brownCoal': 9.9, 'hardCoal': 19.1,
                                              'mineGas': 32.45, 'naturalGas': 32.12, 'Uranium': 560000};
 
 const lcarun = async (params: RunParams, db: knex) => {
-  const rows: Lci[] = await db
+  const inputRows: Lci[] = await db
     .table('lci_input')
-    // .where({ lci_group: 'renewable' });
     .where({ lci_group: 'renewable' }).orWhere({ lci_group: 'nonrenewable' }).orWhere({ lci_group: 'water' });
+
+  const outputRows: Lci[] = await db
+    .table('lci_output')
+    .where({ lci_group: 'CO2' }).orWhere({ lci_group: 'CH4' }).orWhere({ lci_group: 'N2O' })
+    .orWhere({ lci_group: 'CO' }).orWhere({ lci_group: 'NOx' }).orWhere({ lci_group: 'NMVOC' })
+    .orWhere({ lci_group: 'particulates' });
   // const nonrenewableRows: Lci[] = await db
   //   .table('lci_input')
   //   .where({ lci_group: 'nonrenewable' });
@@ -32,19 +37,59 @@ const lcarun = async (params: RunParams, db: knex) => {
   let renewableSum = 0;
   let nonrenewableSum = 0;
   let waterSum = 0;
-  for (let i = 0; i < rows.length; i++) {
-      if (rows[i].lci_group === 'renewable') {
-        renewableSum = renewableSum + processRow(rows[i], params);
+// tslint:disable-next-line: variable-name
+  let CO2sum = 0;
+// tslint:disable-next-line: variable-name
+  let CH4sum = 0;
+// tslint:disable-next-line: variable-name
+  let N2Osum = 0;
+// tslint:disable-next-line: variable-name
+  let COsum = 0;
+// tslint:disable-next-line: variable-name
+  let NOxsum = 0;
+// tslint:disable-next-line: variable-name
+  let NMVOCsum = 0;
+  let particulatesSum = 0;
+// tslint:disable-next-line: variable-name
+  let CO2eSum = 0;
+  for (let i = 0; i < inputRows.length; i++) {
+      if (inputRows[i].lci_group === 'renewable') {
+        renewableSum = renewableSum + processRow(inputRows[i], params);
       }
-      if (rows[i].lci_group === 'nonrenewable') {
-        nonrenewableSum = nonrenewableSum + processRow(rows[i], params) * unitParams[rows[i].lci_name];
+      if (inputRows[i].lci_group === 'nonrenewable') {
+        nonrenewableSum = nonrenewableSum + processRow(inputRows[i], params) * unitParams[inputRows[i].lci_name];
       }
-      if (rows[i].lci_group === 'water') {
-        waterSum = waterSum + processRow(rows[i], params);
+      if (inputRows[i].lci_group === 'water') {
+        waterSum = waterSum + processRow(inputRows[i], params);
       }
   }
 
-  return { success: true, params, rows, renewableSum, nonrenewableSum, waterSum };
+  for (let i = 0; i < outputRows.length; i++) {
+    if (outputRows[i].lci_group === 'CO2') {
+      CO2sum = CO2sum + processRow(outputRows[i], params) * 1000;
+    }
+    if (outputRows[i].lci_group === 'CH4') {
+      CH4sum = CH4sum + processRow(outputRows[i], params) * 1000;
+    }
+    if (outputRows[i].lci_group === 'N2O') {
+      N2Osum = N2Osum + processRow(outputRows[i], params) * 1000;
+    }
+    if (outputRows[i].lci_group === 'CO') {
+      COsum = COsum + processRow(outputRows[i], params) * 1000;
+    }
+    if (outputRows[i].lci_group === 'NOx') {
+      NOxsum = NOxsum + processRow(outputRows[i], params) * 1000;
+    }
+    if (outputRows[i].lci_group === 'NMVOC') {
+      NMVOCsum = NMVOCsum + processRow(outputRows[i], params) * 1000;
+    }
+    if (outputRows[i].lci_group === 'particulates') {
+      particulatesSum = particulatesSum + processRow(outputRows[i], params) * 1000;
+    }
+  }
+  CO2eSum = CO2sum + CH4sum * 30 + N2Osum * 265;
+  return { success: true, params, inputRows, renewableSum, nonrenewableSum, waterSum,
+           outputRows, CO2sum, CH4sum, N2Osum, COsum, NOxsum, NMVOCsum, particulatesSum, CO2eSum };
 };
 
 const processRow = (row: Lci, params: RunParams) => {
