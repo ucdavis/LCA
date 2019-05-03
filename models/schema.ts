@@ -7,4 +7,5 @@ export interface Lci {
     transport: number;
     electricity: number;
     lci_group: string;
+    lci_name: string;
 }
