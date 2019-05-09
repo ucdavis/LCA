@@ -3,8 +3,9 @@ import knex from 'knex';
 import { Lci } from 'models/schema';
 import { RunParams } from './lca.model';
 
-// NonrenewableUnitParams were used to change units for nonrenewable group. Units change is not needed for other groups
-interface NonrenewableUnitParams {
+// NonrenewableUnitEnergyContent were used to change units for nonrenewable group.
+// Units change is not needed for other groups
+interface NonrenewableUnitEnergyContent {
   brownCoal: number;
   hardCoal: number;
   crudeOil: number;
@@ -13,9 +14,11 @@ interface NonrenewableUnitParams {
   Uranium: number;
   [key: string]: number;
 }
-const unitParams: NonrenewableUnitParams = { brownCoal: 9.9, hardCoal: 19.1, crudeOil: 45.8,
-                                             mineGas: 32.45, naturalGas: 32.12, Uranium: 560000};
-
+// unitEnergyContent refers to the energy content per kg of the flow.
+// For example, the weight of brownCoal can be queried from table lci_input; its energy content is 9.9 MJ/kg.
+// The total energy content of brownCoal can be calculate by multiplying the weight by energy content per kg.
+const unitEnergyContent: NonrenewableUnitEnergyContent = { brownCoal: 9.9, hardCoal: 19.1, crudeOil: 45.8,
+                                                           mineGas: 32.45, naturalGas: 32.12, Uranium: 560000};
 const lcarun = async (params: RunParams, db: knex) => {
   const consumptions = await processInput(params, db);
   const pollutions = await processOutput(params, db);
@@ -38,7 +41,7 @@ const processInput = async (params: RunParams, db: knex) => {
     }
     if (consumptionRows[i].lci_group === 'nonrenewable') {
       nonrenewableSum = nonrenewableSum + processRow(consumptionRows[i], params)
-      * unitParams[consumptionRows[i].lci_name];
+      * unitEnergyContent[consumptionRows[i].lci_name];
     }
     if (consumptionRows[i].lci_group === 'water') {
       waterSum = waterSum + processRow(consumptionRows[i], params);
@@ -65,6 +68,7 @@ const processOutput = async (params: RunParams, db: knex) => {
 
   for (let i = 0; i < pollutionRows.length; i++) {
     if (pollutionRows[i].lci_group === 'CO2') {
+      // * 1000 because we want it in the unit of g and its unit is g orginally in db.
       co2Sum = co2Sum + processRow(pollutionRows[i], params) * 1000;
     }
     if (pollutionRows[i].lci_group === 'CH4') {
@@ -86,6 +90,9 @@ const processOutput = async (params: RunParams, db: knex) => {
       particulatesSum = particulatesSum + processRow(pollutionRows[i], params) * 1000;
     }
   }
+  // CO2e is CO2 equivalent
+  // Ratio: CH4/CO2 = 30; N2O/CO2 = 265;
+  // To get the total amount of CO2 equivalent:
   co2eSum = co2Sum + ch4Sum * 30 + n2oSum * 265;
   return { co2Sum, ch4Sum, n2oSum, coSum, noxSum, nmvocSum, particulatesSum, co2eSum };
 };
@@ -95,7 +102,6 @@ const processRow = (row: Lci, params: RunParams) => {
     + row.diesel * params.excavatfuel * params.biomass
     + row.transport * params.distance * params.biomass / 1000
     + row.electricity;
-    // console.log(result);
     return (
     result
   );
