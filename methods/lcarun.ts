@@ -2,6 +2,7 @@ import knex from 'knex';
 
 import { Lci } from 'models/schema';
 import { RunParams } from './lca.model';
+// tslint:disable: variable-name
 
 // NonrenewableUnitParams were used to change units for nonrenewable group. Units change is not needed for other groups
 interface NonrenewableUnitParams {
@@ -34,35 +35,16 @@ const lcarun = async (params: RunParams, db: knex) => {
   //   .where({ lci_group: 'water' });
 
   // const bigNum = Math.max(...rows.map(r => r.number));
-  let renewableSum = 0;
-  let nonrenewableSum = 0;
-  let waterSum = 0;
-// tslint:disable-next-line: variable-name
+
   let CO2sum = 0;
-// tslint:disable-next-line: variable-name
   let CH4sum = 0;
-// tslint:disable-next-line: variable-name
   let N2Osum = 0;
-// tslint:disable-next-line: variable-name
   let COsum = 0;
-// tslint:disable-next-line: variable-name
   let NOxsum = 0;
-// tslint:disable-next-line: variable-name
   let NMVOCsum = 0;
   let particulatesSum = 0;
-// tslint:disable-next-line: variable-name
   let CO2eSum = 0;
-  for (let i = 0; i < inputRows.length; i++) {
-      if (inputRows[i].lci_group === 'renewable') {
-        renewableSum = renewableSum + processRow(inputRows[i], params);
-      }
-      if (inputRows[i].lci_group === 'nonrenewable') {
-        nonrenewableSum = nonrenewableSum + processRow(inputRows[i], params) * unitParams[inputRows[i].lci_name];
-      }
-      if (inputRows[i].lci_group === 'water') {
-        waterSum = waterSum + processRow(inputRows[i], params);
-      }
-  }
+
 
   for (let i = 0; i < outputRows.length; i++) {
     if (outputRows[i].lci_group === 'CO2') {
@@ -90,6 +72,25 @@ const lcarun = async (params: RunParams, db: knex) => {
   CO2eSum = CO2sum + CH4sum * 30 + N2Osum * 265;
   return { success: true, params, inputRows, renewableSum, nonrenewableSum, waterSum,
            outputRows, CO2sum, CH4sum, N2Osum, COsum, NOxsum, NMVOCsum, particulatesSum, CO2eSum };
+};
+
+const processInput = (inputRows: Lci[], params: RunParams) => {
+  let renewableSum = 0;
+  let nonrenewableSum = 0;
+  let waterSum = 0;
+
+  for (let i = 0; i < inputRows.length; i++) {
+    if (inputRows[i].lci_group === 'renewable') {
+      renewableSum = renewableSum + processRow(inputRows[i], params);
+    }
+    if (inputRows[i].lci_group === 'nonrenewable') {
+      nonrenewableSum = nonrenewableSum + processRow(inputRows[i], params) * unitParams[inputRows[i].lci_name];
+    }
+    if (inputRows[i].lci_group === 'water') {
+      waterSum = waterSum + processRow(inputRows[i], params);
+    }
+  }
+  return { renewableSum, nonrenewableSum, waterSum }
 };
 
 const processRow = (row: Lci, params: RunParams) => {
