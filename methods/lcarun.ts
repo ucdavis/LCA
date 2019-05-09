@@ -20,13 +20,13 @@ interface NonrenewableUnitEnergyContent {
 const unitEnergyContent: NonrenewableUnitEnergyContent = { brownCoal: 9.9, hardCoal: 19.1, crudeOil: 45.8,
                                                            mineGas: 32.45, naturalGas: 32.12, Uranium: 560000};
 const lcarun = async (params: RunParams, db: knex) => {
-  const consumptions = await processInput(params, db);
-  const pollutions = await processOutput(params, db);
+  const consumptions = await calculateConsumption(params, db);
+  const pollutions = await calculatePollution(params, db);
 
   return { success: true, params, consumptions, pollutions };
 };
 
-const processInput = async (params: RunParams, db: knex) => {
+const calculateConsumption = async (params: RunParams, db: knex) => {
   const consumptionRows: Lci[] = await db
   .table('lci_input')
   .where({ lci_group: 'renewable' }).orWhere({ lci_group: 'nonrenewable' }).orWhere({ lci_group: 'water' });
@@ -50,7 +50,7 @@ const processInput = async (params: RunParams, db: knex) => {
   return { renewableSum, nonrenewableSum, waterSum };
 };
 
-const processOutput = async (params: RunParams, db: knex) => {
+const calculatePollution = async (params: RunParams, db: knex) => {
   const pollutionRows: Lci[] = await db
     .table('lci_output')
     .where({ lci_group: 'CO2' }).orWhere({ lci_group: 'CH4' }).orWhere({ lci_group: 'N2O' })
