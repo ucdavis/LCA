@@ -3,15 +3,17 @@ import dotenv from 'dotenv';
 import express from 'express';
 import knex from 'knex';
 import pg from 'pg';
+import swaggerUi from 'swagger-ui-express';
 import { RunParams } from './methods/lca.model';
 import { lcarun } from './methods/lcarun';
+// tslint:disable-next-line: no-var-requires
+const swaggerDocument = require('./swagger.json');
 
 // https://github.com/tgriesser/knex/issues/927
 // to handle high precision numerics
 // otherwise js converts them to strings
 const PG_DECIMAL_OID = 1700;
 pg.types.setTypeParser(PG_DECIMAL_OID, parseFloat);
-
 dotenv.config();
 
 const app = express();
@@ -41,6 +43,6 @@ app.post('/lcarun', async (req, res) => {
   res.json(result);
 });
 
-app.get('/', (req, res) => res.sendFile('./docs/index.html'));
+app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.listen(port);
