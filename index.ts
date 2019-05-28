@@ -15,6 +15,7 @@ pg.types.setTypeParser(PG_DECIMAL_OID, parseFloat);
 dotenv.config();
 
 const app = express();
+app.use(express.static('docs'));
 
 app.use(bodyParser.json());
 
@@ -40,6 +41,6 @@ app.post('/lcarun', async (req, res) => {
   res.json(result);
 });
 
-app.get('/', (req, res) => res.send('Hello World!!!'));
+app.get('/', (req, res) => res.sendFile('./docs/index.html'));
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+app.listen(port);
