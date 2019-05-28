@@ -17,7 +17,6 @@ pg.types.setTypeParser(PG_DECIMAL_OID, parseFloat);
 dotenv.config();
 
 const app = express();
-app.use(express.static('docs'));
 
 app.use(bodyParser.json());
 
