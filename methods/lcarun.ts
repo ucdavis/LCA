@@ -1,19 +1,8 @@
 import knex from 'knex';
 
 import { Lci } from 'models/schema';
-import { RunParams } from './lca.model';
+import { NonrenewableUnitEnergyContent, RunParams } from './lca.model';
 
-// NonrenewableUnitEnergyContent were used to change units for nonrenewable group.
-// Units change is not needed for other groups
-interface NonrenewableUnitEnergyContent {
-  brownCoal: number;
-  hardCoal: number;
-  crudeOil: number;
-  mineGas: number;
-  naturalGas: number;
-  Uranium: number;
-  [key: string]: number;
-}
 // unitEnergyContent refers to the energy content per kg of the flow.
 // For example, the weight of brownCoal can be queried from table lci_input; its energy content is 9.9 MJ/kg.
 // The total energy content of brownCoal can be calculate by multiplying the weight by energy content per kg.
@@ -47,6 +36,7 @@ const calculateConsumption = async (params: RunParams, db: knex) => {
       waterSum = waterSum + processRow(consumptionRows[i], params);
     }
   }
+
   return { renewableSum, nonrenewableSum, waterSum };
 };
 
