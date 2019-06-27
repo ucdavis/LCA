@@ -13,7 +13,7 @@
       "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
     }
   },
-  "host": "localhost:3000",
+  "host": "http://localhost:3000",
   "tags": [
     {
       "name": "LCI",
@@ -50,16 +50,20 @@
               ],
               "properties": {
                 "biomass": {
-                  "type": "number"
+                  "type": "number",
+                  "example": 1.316891466
                 },
                 "grindfuel": {
-                  "type": "number"
+                  "type": "number",
+                  "example": 0.002368841
                 },
                 "excavatfuel": {
-                  "type": "number"
+                  "type": "number",
+                  "example": 0.000640885
                 },
                 "distance": {
-                  "type": "number"
+                  "type": "number",
+                  "example": 101
                 }
               }
             }
@@ -183,11 +187,6 @@
     "LciConsumptionOutput": {
       "type": "object",
       "properties": {
-        "waterSum": {
-          "type": "number",
-          "format": "float",
-          "description": "Sum of Water Group"
-        },
         "renewableSum": {
           "type": "number",
           "format": "float",
@@ -197,6 +196,11 @@
           "type": "number",
           "format": "float",
           "description": "Sum of Nonrenewable Group"
+        },
+        "waterSum": {
+          "type": "number",
+          "format": "float",
+          "description": "Sum of Water Group"
         }
       },
       "xml": {
@@ -206,42 +210,42 @@
     "LciPollutionOutput": {
       "type": "object",
       "properties": {
-        "CO2": {
+        "co2Sum": {
           "type": "number",
           "format": "float",
           "description": "Sum of CO2"
         },
-        "CH4": {
+        "ch4Sum": {
           "type": "number",
           "format": "float",
           "description": "Sum of CH4"
         },
-        "NO2": {
+        "no2Sum": {
           "type": "number",
           "format": "float",
           "description": "Sum of NO2"
         },
-        "CO": {
+        "coSum": {
           "type": "number",
           "format": "float",
           "description": "Sum of CO"
         },
-        "NOx": {
+        "noxSum": {
           "type": "number",
           "format": "float",
           "description": "Sum of NOx"
         },
-        "NMVOC": {
+        "nmvocSum": {
           "type": "number",
           "format": "float",
           "description": "Sum of NMVOC"
         },
-        "particulate": {
+        "particulatesSum": {
           "type": "number",
           "format": "float",
           "description": "Sum of particulate"
         },
-        "CO2e": {
+        "co2eSum": {
           "type": "number",
           "format": "float",
           "description": "Sum of CO2e"

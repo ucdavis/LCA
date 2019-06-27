@@ -23,7 +23,7 @@ const lcarun = async (params: RunParams, db: knex) => {
   const consumptions = await calculateConsumption(params, db);
   const pollutions = await calculatePollution(params, db);
 
-  return { success: true, params, consumptions, pollutions };
+  return { consumptions, pollutions };
 };
 
 const calculateConsumption = async (params: RunParams, db: knex) => {

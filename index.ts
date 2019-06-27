@@ -39,7 +39,7 @@ app.post('/lcarun', async (req, res) => {
   const params: RunParams = req.body;
   console.log(req.body);
   const result = await lcarun(params, db);
-  res.json(result);
+  res.status(200).json(result);
 });
 
 app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
