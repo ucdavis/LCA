@@ -1,6 +1,6 @@
 import knex from 'knex';
 
-import { Lci, Traci } from 'models/schema';
+import { Lci, Traci } from '../models/schema';
 import { LCIAresults, LCIresults, RunParams } from './lca.model';
 
 const lcarun = async (params: RunParams, db: knex) => {
