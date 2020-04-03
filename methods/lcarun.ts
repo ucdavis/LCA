@@ -1,100 +1,73 @@
 import knex from 'knex';
 
 import { Lci } from 'models/schema';
-import { NonrenewableUnitEnergyContent, RunParams } from './lca.model';
+import { LCIResults, RunParams } from './lca.model';
 
-// unitEnergyContent refers to the energy content per kg of the flow.
-// For example, the weight of brownCoal can be queried from table lci_input; its energy content is 9.9 MJ/kg.
-// The total energy content of brownCoal can be calculate by multiplying the weight by energy content per kg.
-const unitEnergyContent: NonrenewableUnitEnergyContent = { brownCoal: 9.9, hardCoal: 19.1, crudeOil: 45.8,
-                                                           mineGas: 32.45, naturalGas: 32.12, Uranium: 560000};
 const lcarun = async (params: RunParams, db: knex) => {
-  const consumptions = await calculateConsumption(params, db);
-  const pollutions = await calculatePollution(params, db);
-
-  return { consumptions, pollutions };
+  const lciOut = await calculateLCI(params, db);
+  // const lciaOut = await calculateLCIA(lci.rows);
+  const lciResults = lciOut.results;
+  console.log(lciResults);
+  return { lciResults };
 };
 
-const calculateConsumption = async (params: RunParams, db: knex) => {
-  const consumptionRows: Lci[] = await db
-  .table('lci_input')
-  .where({ lci_group: 'renewable' }).orWhere({ lci_group: 'nonrenewable' }).orWhere({ lci_group: 'water' });
+const calculateLCI = async (params: RunParams, db: knex) => {
+  const rows: Lci[] = await db.select('*').from('lci');
+  const lciResults: LCIResults = {
+    CO2: 0,
+    CH4: 0,
+    N2O: 0,
+    CO2e: 0,
+    CO: 0,
+    NOx: 0,
+    NMVOC: 0,
+    Particulates: 0
+  };
 
-  let renewableSum = 0;
-  let nonrenewableSum = 0;
-  let waterSum = 0;
-
-  for (let i = 0; i < consumptionRows.length; i++) {
-    if (consumptionRows[i].lci_group === 'renewable') {
-      renewableSum = renewableSum + processRow(consumptionRows[i], params);
-    }
-    if (consumptionRows[i].lci_group === 'nonrenewable') {
-      nonrenewableSum = nonrenewableSum + processRow(consumptionRows[i], params)
-      * unitEnergyContent[consumptionRows[i].lci_name];
-    }
-    if (consumptionRows[i].lci_group === 'water') {
-      waterSum = waterSum + processRow(consumptionRows[i], params);
+  for (let i = 0; i < rows.length; i++) {
+    const row = rows[i];
+    row.total = processRow(row, params);
+    if (row.oid === 598) {
+      lciResults.CO2 = row.total * 1000; // kilograms to grams
+    } else if (row.oid === 1959) {
+      lciResults.CH4 = row.total * 1000;
+    } else if (row.oid === 2167) {
+      lciResults.N2O = row.total * 1000;
+    } else if (row.oid === 607) {
+      lciResults.CO = row.total * 1000;
+    } else if (row.oid === 2160) {
+      lciResults.NOx = row.total * 1000;
+    } else if (row.oid === 3463) {
+      lciResults.NMVOC = row.total * 1000;
+    } else if (row.oid === 2293 || row.oid === 2297) {
+      lciResults.Particulates += row.total * 1000;
     }
   }
+  lciResults.CO2e = lciResults.CO2 + lciResults.CH4 * 25 + lciResults.N2O * 298;
 
-  return { renewableSum, nonrenewableSum, waterSum };
-};
-
-const calculatePollution = async (params: RunParams, db: knex) => {
-  const pollutionRows: Lci[] = await db
-    .table('lci_output')
-    .where({ lci_group: 'CO2' }).orWhere({ lci_group: 'CH4' }).orWhere({ lci_group: 'N2O' })
-    .orWhere({ lci_group: 'CO' }).orWhere({ lci_group: 'NOx' }).orWhere({ lci_group: 'NMVOC' })
-    .orWhere({ lci_group: 'particulates' });
-
-  let co2Sum = 0; // CO2
-  let ch4Sum = 0; // CH4
-  let n2oSum = 0; // N2O
-  let coSum = 0; // CO
-  let noxSum = 0; // NOx
-  let nmvocSum = 0; // NMVOC
-  let particulatesSum = 0;
-  let co2eSum = 0; // CO2 equivalent
-
-  for (let i = 0; i < pollutionRows.length; i++) {
-    if (pollutionRows[i].lci_group === 'CO2') {
-      // * 1000 because we want it in the unit of g and its unit is g orginally in db.
-      co2Sum = co2Sum + processRow(pollutionRows[i], params) * 1000;
-    }
-    if (pollutionRows[i].lci_group === 'CH4') {
-      ch4Sum = ch4Sum + processRow(pollutionRows[i], params) * 1000;
-    }
-    if (pollutionRows[i].lci_group === 'N2O') {
-      n2oSum = n2oSum + processRow(pollutionRows[i], params) * 1000;
-    }
-    if (pollutionRows[i].lci_group === 'CO') {
-      coSum = coSum + processRow(pollutionRows[i], params) * 1000;
-    }
-    if (pollutionRows[i].lci_group === 'NOx') {
-      noxSum = noxSum + processRow(pollutionRows[i], params) * 1000;
-    }
-    if (pollutionRows[i].lci_group === 'NMVOC') {
-      nmvocSum = nmvocSum + processRow(pollutionRows[i], params) * 1000;
-    }
-    if (pollutionRows[i].lci_group === 'particulates') {
-      particulatesSum = particulatesSum + processRow(pollutionRows[i], params) * 1000;
-    }
-  }
-  // CO2e is CO2 equivalent
-  // Ratio: CH4/CO2 = 30; N2O/CO2 = 265;
-  // To get the total amount of CO2 equivalent:
-  co2eSum = co2Sum + ch4Sum * 30 + n2oSum * 265;
-  return { co2Sum, ch4Sum, n2oSum, coSum, noxSum, nmvocSum, particulatesSum, co2eSum };
+  return { rows: rows, results: lciResults };
 };
 
 const processRow = (row: Lci, params: RunParams) => {
-    const result = row.diesel * params.grindfuel * params.biomass
-    + row.diesel * params.excavatfuel * params.biomass
-    + row.transport * params.distance * params.biomass / 1000
-    + row.electricity;
-    return (
-    result
-  );
+  let total =
+    row.diesel * params.diesel +
+    row.gasoline * params.gasoline +
+    row.kerosene * params.jetfuel;
+  if (params.distance <= 322) {
+    total += row.transport_short * params.biomass * params.distance;
+  } else {
+    total += row.transport_long * params.biomass * params.distance;
+  }
+  switch (params.technology) {
+    case 'Generic Power Only':
+      total += row.electricity_gpo;
+      break;
+    case 'Combined Heat and Power':
+      total += row.electricity_chp;
+      break;
+  }
+
+  return total;
 };
 
 export { lcarun };

@@ -7,7 +7,7 @@ import swaggerUi from 'swagger-ui-express';
 import { RunParams } from './methods/lca.model';
 import { lcarun } from './methods/lcarun';
 // tslint:disable-next-line: no-var-requires
-const swaggerDocument = require('./swagger.json');
+const swaggerDocument = require('../swagger.json');
 
 // https://github.com/tgriesser/knex/issues/927
 // to handle high precision numerics

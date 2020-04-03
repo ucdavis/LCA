@@ -1,7 +1,7 @@
 {
-  "name": "LCA",
+  "name": "@ucdavis/lca",
   "version": "1.0.0",
-  "description": "Lifecycle Analysis",
+  "description": "Life Cycle Assessment",
   "main": "index.js",
   "repository": "https://github.com/ucdavis/LCA.git",
   "author": "Scott Kirkland <srkirkland@gmail.com>",
@@ -10,10 +10,11 @@
   "scripts": {
     "prebuild": "tslint -c tslint.json -p tsconfig.json",
     "build": "tsc",
-    "dev": "yarn build && node .",
-    "watch": "nodemon --watch . -e ts --exec yarn dev",
-    "start": "node ./index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "npm run build && node ./out/index.js",
+    "watch": "nodemon --watch . -i out -e ts --exec npm run dev",
+    "start": "node ./out/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublishOnly": "tsc -p ./ --outDir out/"
   },
   "dependencies": {
     "@types/pg": "^7.4.14",
@@ -22,14 +23,14 @@
     "express": "^4.16.4",
     "knex": "^0.16.3",
     "pg": "^7.8.1",
-    "swagger-ui-express": "^4.0.5"
+    "swagger-ui-express": "^4.1.4"
   },
   "devDependencies": {
     "@types/dotenv": "^6.1.0",
     "@types/express": "^4.16.1",
     "@types/knex": "^0.15.2",
     "@types/node": "^10.12.21",
-    "@types/swagger-ui-express": "^3.0.0",
+    "@types/swagger-ui-express": "^4.1.2",
     "nodemon": "^1.18.9",
     "tslint": "^5.12.1",
     "tslint-eslint-rules": "^5.4.0",

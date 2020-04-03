@@ -1,18 +1,19 @@
 export interface RunParams {
-    biomass: number;
-    grindfuel: number;
-    excavatfuel: number;
-    distance: number;
+  technology: string;
+  diesel: number; // m3
+  gasoline: number; // m3
+  jetfuel: number; // m3
+  distance: number; // km
+  biomass: number; // tons
 }
 
-// NonrenewableUnitEnergyContent were used to change units for nonrenewable group.
-// Units change is not needed for other groups
-export interface NonrenewableUnitEnergyContent {
-    brownCoal: number;
-    hardCoal: number;
-    crudeOil: number;
-    mineGas: number;
-    naturalGas: number;
-    Uranium: number;
-    [key: string]: number;
-  }
+export interface LCIResults {
+  CO2: number; // grams
+  CH4: number;
+  N2O: number;
+  CO2e: number;
+  CO: number;
+  NOx: number;
+  NMVOC: number;
+  Particulates: number;
+}
