@@ -143,10 +143,10 @@ const processRow = (row: Lci, params: RunParams) => {
     total += row.transport_long * params.biomass * params.distance;
   }
   switch (params.technology) {
-    case 'Generic Power Only':
+    case 'GPO': // Generic Power Only
       total += row.electricity_gpo;
       break;
-    case 'Combined Heat and Power':
+    case 'CHP': // Combined Heat and Power
       total += row.electricity_chp;
       break;
   }
