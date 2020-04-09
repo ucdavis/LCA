@@ -1,139 +1,95 @@
 {
   "swagger": "2.0",
   "info": {
-    "description": "This is a sample server Petstore server.  You can find out more about     Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).      For this sample, you can use the api key `special-key` to test the authorization     filters.",
+    "description": "This is a service for running LCA, funded by California Energy Commission",
     "version": "1.0.0",
-    "title": "Lifecycle Inventory",
-    "termsOfService": "http://swagger.io/terms/",
+    "title": "Life Cycle Assessment",
     "contact": {
-      "email": "apiteam@swagger.io"
+      "email": "kkyli@ucdavis.edu"
     },
     "license": {
-      "name": "Apache 2.0",
-      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+      "name": "MIT license",
+      "url": "https://github.com/ucdavis/LCA/blob/master/LICENSE"
     }
   },
   "host": "localhost:3000",
   "tags": [
     {
-      "name": "LCI",
-      "description": "Lifecycle Inventory"
+      "name": "LCA",
+      "description": "Life Cycle Assessment (LCA)"
     }
-  ],
-  "schemes": [
-    "http"
   ],
   "paths": {
     "/lcarun": {
-      "post": {
-        "tags": [
-          "lci"
-        ],
-        "summary": "Runs LCI from given input",
-        "description": "",
-        "operationId": "runLCI",
-        "produces": [
-          "application/json"
-        ],
-        "parameters": [
-          {
-            "in": "body",
-            "name": "params",
-            "schema": {
-              "type": "object",
-              "required": [
-                "biomass",
-                "grindfuel",
-                "excavatfuel",
-                "distance"
-              ],
-              "properties": {
-                "biomass": {
-                  "type": "number",
-                  "example": 1.316891466
-                },
-                "grindfuel": {
-                  "type": "number",
-                  "example": 0.002368841
-                },
-                "excavatfuel": {
-                  "type": "number",
-                  "example": 0.000640885
-                },
-                "distance": {
-                  "type": "number",
-                  "example": 101
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "$ref": "#/definitions/LciOutput"
-            }
-          },
-          "400": {
-            "description": "Invalid parameters supplied"
-          }
-        }
-      }
-    },
-    "/lci/{group}": {
       "get": {
         "tags": [
-          "lci"
+          "lca"
         ],
-        "summary": "Runs LCI from given input",
+        "summary": "Runs LCA from given input",
         "description": "",
-        "operationId": "getGroupSums",
+        "operationId": "runLCA",
         "produces": [
           "application/json"
         ],
         "parameters": [
           {
-            "name": "biomass",
+            "name": "technology",
+            "description": "Power Generation Technology",
             "in": "query",
-            "required": true,
-            "type": "number"
-          },
-          {
-            "name": "grindfuel",
-            "in": "query",
-            "required": true,
-            "type": "number"
-          },
-          {
-            "name": "excavatfuel",
-            "in": "query",
-            "required": true,
-            "type": "number"
-          },
-          {
-            "name": "distance",
-            "in": "query",
-            "required": true,
-            "type": "number"
-          },
-          {
-            "name": "group",
-            "in": "path",
             "required": true,
             "type": "string",
             "enum": [
-              "renewable",
-              "nonrenewable",
-              "water"
-            ]
+              "GPO",
+              "CHP"
+            ],
+            "default": "CHP"
+          },
+          {
+            "name": "diesel",
+            "description": "Diesel consumption (m3/kWh electricity generated)",
+            "in": "query",
+            "required": true,
+            "type": "number",
+            "default": 0.005
+          },
+          {
+            "name": "gasoline",
+            "description": "Gasoline consumption (m3/kWh electricity generated)",
+            "in": "query",
+            "required": true,
+            "type": "number",
+            "default": 1
+          },
+          {
+            "name": "jetfuel",
+            "description": "Jet fuel consumption (m3/kWh electricity generated)",
+            "in": "query",
+            "required": true,
+            "type": "number",
+            "default": 1
+          },
+          {
+            "name": "distance",
+            "description": "The distance between a harvest unit and a biopower facility (km)",
+            "in": "query",
+            "required": true,
+            "type": "number",
+            "default": 100
+          },
+          {
+            "name": "biomass",
+            "description": "The amount of biomass in (t/kWh eletricity generated)",
+            "in": "query",
+            "required": true,
+            "type": "number",
+            "default": 3
           }
         ],
         "responses": {
           "200": {
             "description": "successful operation",
             "schema": {
-              "$ref": "#/definitions/LciOutput"
+              "$ref": "#/definitions/Output"
             }
           },
           "400": {
@@ -144,148 +100,255 @@
     }
   },
   "definitions": {
-    "Lci": {
+    "LciResults": {
       "type": "object",
       "properties": {
-        "oid": {
-          "type": "integer",
-          "format": "int64"
-        },
-        "flow": {
-          "type": "string",
-          "description": "Name of Flow"
-        },
-        "unit": {
-          "type": "string"
-        },
-        "diesel": {
+        "CO2": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Carbon dioxide emissions (g)",
+          "example": 47882.01
         },
-        "transport": {
+        "CH4": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Methane emissions (g)",
+          "example": 1.71
         },
-        "electricity": {
+        "N2O": {
           "type": "number",
-          "format": "float"
+          "format": "float",
+          "description": "Nitrous oxide emissions (g)",
+          "example": 0.17
         },
-        "lci_group": {
-          "type": "string",
-          "enum": [
-            "renewable",
-            "nonrenewable",
-            "water"
-          ]
+        "CO2e": {
+          "type": "number",
+          "format": "float",
+          "description": "Carbon dioxide equivalent emissions (g)",
+          "example": 47974.14
+        },
+        "CO": {
+          "type": "number",
+          "format": "float",
+          "description": "Carbon monoxide emissions (g)",
+          "example": 192.29
+        },
+        "NOx": {
+          "type": "number",
+          "format": "float",
+          "description": "Nitrogen oxides emissions (g)",
+          "example": 395.03
+        },
+        "NMVOC": {
+          "type": "number",
+          "format": "float",
+          "description": "Non-methane volatile organic compounds emissions (g)",
+          "example": 12.09
+        },
+        "Particulates": {
+          "type": "number",
+          "format": "float",
+          "description": "Particulate matter emissions (g)",
+          "example": 19.82
         }
       },
       "xml": {
-        "name": "Lci"
+        "name": "LciResults"
       }
     },
-    "LciConsumptionOutput": {
+    "LciaResults": {
       "type": "object",
       "properties": {
-        "renewableSum": {
+        "global_warming_air": {
           "type": "number",
           "format": "float",
-          "description": "Sum of Renewable Group"
+          "description": "Global Warming Potentials for Air Emissions (kg CO2 eq/kg substance)",
+          "example": 47.97413521
         },
-        "nonrenewableSum": {
+        "acidification_air": {
           "type": "number",
           "format": "float",
-          "description": "Sum of Nonrenewable Group"
+          "description": "Acidification Potentials for Air Emissions (kg SO2 eq/kg substance)",
+          "example": 0.011894749
         },
-        "waterSum": {
+        "hh_particulate_air": {
           "type": "number",
           "format": "float",
-          "description": "Sum of Water Group"
+          "description": "Human Health Particulate (and secondary particulate matter precursors) Potentials for Air Emissions (PM2.5eq/kg substance)",
+          "example": 0.000229894
+        },
+        "eutrophication_air": {
+          "type": "number",
+          "format": "float",
+          "description": "Eutrophication Potentials for Air Emissions (kg N eq/kg substance)",
+          "example": 0.000725385
+        },
+        "eutrophication_water": {
+          "type": "number",
+          "format": "float",
+          "description": "Eutrophication Potentials for Water Emissions (kg N eq/kg substance)",
+          "example": 0.004766378
+        },
+        "ozone_depletion_air": {
+          "type": "number",
+          "format": "float",
+          "description": "Ozone Depletion Potentials for Air Emissions (kg CFC-11 eq/kg substance)",
+          "example": 0
+        },
+        "smog_air": {
+          "type": "number",
+          "format": "float",
+          "description": "Smog Formation Potentials for Air Emissions (kg O3 eq/kg substance)",
+          "example": 0.271093548
+        },
+        "ecotox_airu_fresh_water": {
+          "type": "number",
+          "format": "float",
+          "description": "Freshwater Ecotoxicity Potentials for Urban Air Emissions (CTUeco/kg)",
+          "example": 0.00063757
+        },
+        "ecotox_airc_fresh_water": {
+          "type": "number",
+          "format": "float",
+          "description": "Freshwater Ecotoxicity Potentials for Rural Air Emissions (CTUeco/kg)",
+          "example": 0.000614061
+        },
+        "ecotox_waterc_fresh_water": {
+          "type": "number",
+          "format": "float",
+          "description": "Freshwater Ecotoxicity Potentials for Freshwater Emissions (CTUeco/kg)",
+          "example": 0.053856187
+        },
+        "ecotox_seawaterc_fresh_water": {
+          "type": "number",
+          "format": "float",
+          "description": "Freshwater Ecotoxicity Potentials for Seawater Emissions (CTUeco/kg)",
+          "example": 0.0000123588
+        },
+        "ecotox_natsoilc_fresh_water": {
+          "type": "number",
+          "format": "float",
+          "description": "Freshwater Ecotoxicity Potentials for Natural Soil Emissions (CTUeco/kg)",
+          "example": 0.009157605
+        },
+        "ecotox_agrsoilc_fresh_water": {
+          "type": "number",
+          "format": "float",
+          "description": "Freshwater Ecotoxicity Potentials for Agricultural Soil Emissions (CTUeco/kg)",
+          "example": 0.009157605
+        },
+        "cf_flag_ecotox": {
+          "type": "number",
+          "format": "float",
+          "description": "Characterization Factor Flag for Ecotoxicity Potentials",
+          "example": 0
+        },
+        "hh_urban_air_cancer": {
+          "type": "number",
+          "format": "float",
+          "description": "Human health Cancer Potentials for Urban Air Emissions (CTUcancer/kg)",
+          "example": 4.58954e-10
+        },
+        "hh_urban_air_noncanc": {
+          "type": "number",
+          "format": "float",
+          "description": "Human health Non-cancer Potentials for Urban Air Emissions (CTUnoncancer/kg)",
+          "example": 1.97021e-9
+        },
+        "hh_rural_air_cancer": {
+          "type": "number",
+          "format": "float",
+          "description": "Human health Cancer Potentials for Rural Air Emissions (CTUcancer/kg)",
+          "example": 2.652e-11
+        },
+        "hh_rural_air_noncanc": {
+          "type": "number",
+          "format": "float",
+          "description": "Human health Non-cancer Potentials for Rural Air Emissions (CTUnoncancer/kg)",
+          "example": 7.94009e-11
+        },
+        "hh_fresh_water_cancer": {
+          "type": "number",
+          "format": "float",
+          "description": "Human health Cancer Potentials for Freshwater Emissions (CTUcancer/kg)",
+          "example": 7.7327e-12
+        },
+        "hh_fresh_water_noncanc": {
+          "type": "number",
+          "format": "float",
+          "description": "Human health Non-cancer Potentials for Freshwater Air Emissions (CTUnoncancer/kg)",
+          "example": 1.04708e-10
+        },
+        "hh_sea_water_cancer": {
+          "type": "number",
+          "format": "float",
+          "description": "Human health Cancer Potentials for Sea water Emissions (CTUcancer/kg)",
+          "example": 8.71756e-13
+        },
+        "hh_sea_water_noncanc": {
+          "type": "number",
+          "format": "float",
+          "description": "Human health Non-cancer Potentials for Sea water Emissions (CTUnoncancer/kg)",
+          "example": 6.02252e-12
+        },
+        "hh_natural_soil_cancer": {
+          "type": "number",
+          "format": "float",
+          "description": "Human health Cancer Potentials for Natural Soil Emissions (CTUcancer/kg)",
+          "example": 6.63081e-12
+        },
+        "hh_natural_soil_noncanc": {
+          "type": "number",
+          "format": "float",
+          "description": "Human health Non-cancer Potentials for Natural Soil Emissions (CTUnoncancer/kg)",
+          "example": 5.69862e-11
+        },
+        "hh_agric_soil_cancer": {
+          "type": "number",
+          "format": "float",
+          "description": "Human health Cancer Potentials for Agricultural Soil Emissions (CTUcancer/kg)",
+          "example": 7.43219e-12
+        },
+        "hh_agric_soil_noncanc": {
+          "type": "number",
+          "format": "float",
+          "description": "uman health Non-cancer Potentials for Agricultural Soil Emissions (CTUnoncancer/kg)",
+          "example": 7.01345e-11
+        },
+        "cf_flag_hh_carcinogenic": {
+          "type": "number",
+          "format": "float",
+          "description": "Characterization Factor Flag for Human Health Carcinogenic Potentials",
+          "example": 0
+        },
+        "cf_flag_hh_noncarcinogenic": {
+          "type": "number",
+          "format": "float",
+          "description": "Characterization Factor Flag for Human Health Non-carcinogenic Potentials",
+          "example": 0
         }
       },
       "xml": {
-        "name": "LciConsumptionOutput"
+        "name": "LciaResults"
       }
     },
-    "LciPollutionOutput": {
+    "Output": {
       "type": "object",
       "properties": {
-        "co2Sum": {
-          "type": "number",
-          "format": "float",
-          "description": "Sum of CO2"
+        "LciResults": {
+          "$ref": "#/definitions/LciResults"
         },
-        "ch4Sum": {
-          "type": "number",
-          "format": "float",
-          "description": "Sum of CH4"
-        },
-        "no2Sum": {
-          "type": "number",
-          "format": "float",
-          "description": "Sum of NO2"
-        },
-        "coSum": {
-          "type": "number",
-          "format": "float",
-          "description": "Sum of CO"
-        },
-        "noxSum": {
-          "type": "number",
-          "format": "float",
-          "description": "Sum of NOx"
-        },
-        "nmvocSum": {
-          "type": "number",
-          "format": "float",
-          "description": "Sum of NMVOC"
-        },
-        "particulatesSum": {
-          "type": "number",
-          "format": "float",
-          "description": "Sum of particulate"
-        },
-        "co2eSum": {
-          "type": "number",
-          "format": "float",
-          "description": "Sum of CO2e"
+        "LciaResults": {
+          "$ref": "#/definitions/LciaResults"
         }
       },
       "xml": {
-        "name": "LciPollutionOutput"
-      }
-    },
-    "LciOutput": {
-      "type": "object",
-      "properties": {
-        "consumptions": {
-          "$ref": "#/definitions/LciConsumptionOutput"
-        },
-        "pollutions": {
-          "$ref": "#/definitions/LciPollutionOutput"
-        }
-      },
-      "xml": {
-        "name": "LciOutput"
-      }
-    },
-    "ApiResponse": {
-      "type": "object",
-      "properties": {
-        "code": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "type": {
-          "type": "string"
-        },
-        "message": {
-          "type": "string"
-        }
+        "name": "Output"
       }
     }
   },
   "externalDocs": {
-    "description": "Find out more about Swagger",
-    "url": "http://swagger.io"
+    "description": "Source code",
+    "url": "https://github.com/ucdavis/LCA"
   }
 }
