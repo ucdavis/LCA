@@ -237,12 +237,6 @@
           "description": "Freshwater Ecotoxicity Potentials for Agricultural Soil Emissions (CTUeco/kg)",
           "example": 0.009157605
         },
-        "cf_flag_ecotox": {
-          "type": "number",
-          "format": "float",
-          "description": "Characterization Factor Flag for Ecotoxicity Potentials",
-          "example": 0
-        },
         "hh_urban_air_cancer": {
           "type": "number",
           "format": "float",
@@ -314,18 +308,6 @@
           "format": "float",
           "description": "uman health Non-cancer Potentials for Agricultural Soil Emissions (CTUnoncancer/kg)",
           "example": 7.01345e-11
-        },
-        "cf_flag_hh_carcinogenic": {
-          "type": "number",
-          "format": "float",
-          "description": "Characterization Factor Flag for Human Health Carcinogenic Potentials",
-          "example": 0
-        },
-        "cf_flag_hh_noncarcinogenic": {
-          "type": "number",
-          "format": "float",
-          "description": "Characterization Factor Flag for Human Health Non-carcinogenic Potentials",
-          "example": 0
         }
       },
       "xml": {
