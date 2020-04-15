@@ -12,7 +12,8 @@ const lcarun = async (params: RunParams, db: knex) => {
 };
 
 const calculateLCI = async (params: RunParams, db: knex) => {
-  const lci: Lci[] = await db.select('*').from('lci').orderBy('oid');
+  const schema = process.env.DB_SCHEMA ? process.env.DB_SCHEMA : 'public';
+  const lci: Lci[] = await db.withSchema(schema).select('*').from('lci').orderBy('oid');
   const lciResults: LCIresults = {
     CO2: 0,
     CH4: 0,
@@ -49,7 +50,8 @@ const calculateLCI = async (params: RunParams, db: knex) => {
 };
 
 const calculateLCIA = async (lci: Lci[], db: knex) => {
-  const traci: Traci[] = await db.select('*').from('traci').orderBy('oid');
+  const schema = process.env.DB_SCHEMA ? process.env.DB_SCHEMA : 'public';
+  const traci: Traci[] = await db.withSchema(schema).select('*').from('traci').orderBy('oid');
   const lcia: LCIAresults = {
     global_warming_air: 0,
     acidification_air: 0,
