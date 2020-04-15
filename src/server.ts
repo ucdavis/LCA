@@ -20,7 +20,7 @@ const app = express();
 
 app.use(bodyParser.json());
 
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 // https://knexjs.org/
 const db = knex({
@@ -29,7 +29,7 @@ const db = knex({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PASS,
-    database: 'lca',
+    database: process.env.DB_NAME
   },
 });
 
@@ -43,4 +43,4 @@ app.get('/lcarun', async (req, res) => {
 
 app.use('/', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-app.listen(port);
+app.listen(port, () => console.log(`Listening on port ${port}!`));
