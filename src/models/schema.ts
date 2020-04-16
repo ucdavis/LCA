@@ -1,6 +1,6 @@
 // analysis table
 export interface Lci {
-  oid: number;
+  index: number;
   flow: string;
   category: string;
   unit: string;
@@ -15,7 +15,7 @@ export interface Lci {
 }
 
 export interface Traci {
-  oid: number;
+  index: number;
   cas: number;
   global_warming_air: number;
   acidification_air: number;

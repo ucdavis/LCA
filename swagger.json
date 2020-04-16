@@ -12,7 +12,6 @@
       "url": "https://github.com/ucdavis/LCA/blob/master/LICENSE"
     }
   },
-  "host": "localhost:3000",
   "tags": [
     {
       "name": "LCA",
