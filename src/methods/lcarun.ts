@@ -13,7 +13,8 @@ const lcarun = async (params: RunParams, db: knex) => {
 
 const calculateLCI = async (params: RunParams, db: knex) => {
   const schema = process.env.DB_SCHEMA ? process.env.DB_SCHEMA : 'public';
-  const lci: Lci[] = await db.withSchema(schema).select('*').from('lci').orderBy('oid');
+  console.log('schema: ' + schema);
+  const lci: Lci[] = await db.withSchema(schema).select('*').from('lci').orderBy('index');
   const lciResults: LCIresults = {
     CO2: 0,
     CH4: 0,
@@ -28,19 +29,19 @@ const calculateLCI = async (params: RunParams, db: knex) => {
   for (let i = 0; i < lci.length; i++) {
     const row = lci[i];
     row.total = processRow(row, params);
-    if (row.oid === 598) {
+    if (row.index === 598) {
       lciResults.CO2 = row.total * 1000; // kilograms to grams
-    } else if (row.oid === 1959) {
+    } else if (row.index === 1959) {
       lciResults.CH4 = row.total * 1000;
-    } else if (row.oid === 2167) {
+    } else if (row.index === 2167) {
       lciResults.N2O = row.total * 1000;
-    } else if (row.oid === 607) {
+    } else if (row.index === 607) {
       lciResults.CO = row.total * 1000;
-    } else if (row.oid === 2160) {
+    } else if (row.index === 2160) {
       lciResults.NOx = row.total * 1000;
-    } else if (row.oid === 3463) {
+    } else if (row.index === 3463) {
       lciResults.NMVOC = row.total * 1000;
-    } else if (row.oid === 2293 || row.oid === 2297) {
+    } else if (row.index === 2293 || row.index === 2297) {
       lciResults.Particulates += row.total * 1000;
     }
   }
@@ -51,7 +52,7 @@ const calculateLCI = async (params: RunParams, db: knex) => {
 
 const calculateLCIA = async (lci: Lci[], db: knex) => {
   const schema = process.env.DB_SCHEMA ? process.env.DB_SCHEMA : 'public';
-  const traci: Traci[] = await db.withSchema(schema).select('*').from('traci').orderBy('oid');
+  const traci: Traci[] = await db.withSchema(schema).select('*').from('traci').orderBy('index');
   const lcia: LCIAresults = {
     global_warming_air: 0,
     acidification_air: 0,
