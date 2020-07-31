@@ -49,7 +49,7 @@
             "in": "query",
             "required": true,
             "type": "number",
-            "default": 0.005
+            "default": 1
           },
           {
             "name": "gasoline",
@@ -69,19 +69,11 @@
           },
           {
             "name": "distance",
-            "description": "The distance between a harvest unit and a biopower facility (km)",
+            "description": "The distance between a harvest unit and a biopower facility (miles/kWh electricity generated)",
             "in": "query",
             "required": true,
             "type": "number",
             "default": 100
-          },
-          {
-            "name": "biomass",
-            "description": "The amount of biomass in (t/kWh eletricity generated)",
-            "in": "query",
-            "required": true,
-            "type": "number",
-            "default": 3
           }
         ],
         "responses": {
@@ -199,114 +191,6 @@
           "format": "float",
           "description": "Smog Formation Potentials for Air Emissions (kg O3 eq/kg substance)",
           "example": 0.271093548
-        },
-        "ecotox_airu_fresh_water": {
-          "type": "number",
-          "format": "float",
-          "description": "Freshwater Ecotoxicity Potentials for Urban Air Emissions (CTUeco/kg)",
-          "example": 0.00063757
-        },
-        "ecotox_airc_fresh_water": {
-          "type": "number",
-          "format": "float",
-          "description": "Freshwater Ecotoxicity Potentials for Rural Air Emissions (CTUeco/kg)",
-          "example": 0.000614061
-        },
-        "ecotox_waterc_fresh_water": {
-          "type": "number",
-          "format": "float",
-          "description": "Freshwater Ecotoxicity Potentials for Freshwater Emissions (CTUeco/kg)",
-          "example": 0.053856187
-        },
-        "ecotox_seawaterc_fresh_water": {
-          "type": "number",
-          "format": "float",
-          "description": "Freshwater Ecotoxicity Potentials for Seawater Emissions (CTUeco/kg)",
-          "example": 0.0000123588
-        },
-        "ecotox_natsoilc_fresh_water": {
-          "type": "number",
-          "format": "float",
-          "description": "Freshwater Ecotoxicity Potentials for Natural Soil Emissions (CTUeco/kg)",
-          "example": 0.009157605
-        },
-        "ecotox_agrsoilc_fresh_water": {
-          "type": "number",
-          "format": "float",
-          "description": "Freshwater Ecotoxicity Potentials for Agricultural Soil Emissions (CTUeco/kg)",
-          "example": 0.009157605
-        },
-        "hh_urban_air_cancer": {
-          "type": "number",
-          "format": "float",
-          "description": "Human health Cancer Potentials for Urban Air Emissions (CTUcancer/kg)",
-          "example": 4.58954e-10
-        },
-        "hh_urban_air_noncanc": {
-          "type": "number",
-          "format": "float",
-          "description": "Human health Non-cancer Potentials for Urban Air Emissions (CTUnoncancer/kg)",
-          "example": 1.97021e-9
-        },
-        "hh_rural_air_cancer": {
-          "type": "number",
-          "format": "float",
-          "description": "Human health Cancer Potentials for Rural Air Emissions (CTUcancer/kg)",
-          "example": 2.652e-11
-        },
-        "hh_rural_air_noncanc": {
-          "type": "number",
-          "format": "float",
-          "description": "Human health Non-cancer Potentials for Rural Air Emissions (CTUnoncancer/kg)",
-          "example": 7.94009e-11
-        },
-        "hh_fresh_water_cancer": {
-          "type": "number",
-          "format": "float",
-          "description": "Human health Cancer Potentials for Freshwater Emissions (CTUcancer/kg)",
-          "example": 7.7327e-12
-        },
-        "hh_fresh_water_noncanc": {
-          "type": "number",
-          "format": "float",
-          "description": "Human health Non-cancer Potentials for Freshwater Air Emissions (CTUnoncancer/kg)",
-          "example": 1.04708e-10
-        },
-        "hh_sea_water_cancer": {
-          "type": "number",
-          "format": "float",
-          "description": "Human health Cancer Potentials for Sea water Emissions (CTUcancer/kg)",
-          "example": 8.71756e-13
-        },
-        "hh_sea_water_noncanc": {
-          "type": "number",
-          "format": "float",
-          "description": "Human health Non-cancer Potentials for Sea water Emissions (CTUnoncancer/kg)",
-          "example": 6.02252e-12
-        },
-        "hh_natural_soil_cancer": {
-          "type": "number",
-          "format": "float",
-          "description": "Human health Cancer Potentials for Natural Soil Emissions (CTUcancer/kg)",
-          "example": 6.63081e-12
-        },
-        "hh_natural_soil_noncanc": {
-          "type": "number",
-          "format": "float",
-          "description": "Human health Non-cancer Potentials for Natural Soil Emissions (CTUnoncancer/kg)",
-          "example": 5.69862e-11
-        },
-        "hh_agric_soil_cancer": {
-          "type": "number",
-          "format": "float",
-          "description": "Human health Cancer Potentials for Agricultural Soil Emissions (CTUcancer/kg)",
-          "example": 7.43219e-12
-        },
-        "hh_agric_soil_noncanc": {
-          "type": "number",
-          "format": "float",
-          "description": "uman health Non-cancer Potentials for Agricultural Soil Emissions (CTUnoncancer/kg)",
-          "example": 7.01345e-11
         }
       },
       "xml": {
