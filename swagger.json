@@ -180,12 +180,6 @@
           "description": "Eutrophication Potentials for Water Emissions (kg N eq/kg substance)",
           "example": 0.004766378
         },
-        "ozone_depletion_air": {
-          "type": "number",
-          "format": "float",
-          "description": "Ozone Depletion Potentials for Air Emissions (kg CFC-11 eq/kg substance)",
-          "example": 0
-        },
         "smog_air": {
           "type": "number",
           "format": "float",
