@@ -39,33 +39,34 @@
             "type": "string",
             "enum": [
               "GPO",
-              "CHP"
+              "CHP",
+              "GP"
             ],
             "default": "CHP"
           },
           {
             "name": "diesel",
-            "description": "Diesel consumption (m3/kWh electricity generated)",
+            "description": "Diesel consumption (gal/kWh electricity generated)",
             "in": "query",
             "required": true,
             "type": "number",
-            "default": 1
+            "default": 5
           },
           {
             "name": "gasoline",
-            "description": "Gasoline consumption (m3/kWh electricity generated)",
+            "description": "Gasoline consumption (gal/kWh electricity generated)",
             "in": "query",
             "required": true,
             "type": "number",
-            "default": 1
+            "default": 3
           },
           {
             "name": "jetfuel",
-            "description": "Jet fuel consumption (m3/kWh electricity generated)",
+            "description": "Jet fuel consumption (gal/kWh electricity generated)",
             "in": "query",
             "required": true,
             "type": "number",
-            "default": 1
+            "default": 7
           },
           {
             "name": "distance",
@@ -73,7 +74,7 @@
             "in": "query",
             "required": true,
             "type": "number",
-            "default": 100
+            "default": 20
           }
         ],
         "responses": {
@@ -97,50 +98,56 @@
         "CO2": {
           "type": "number",
           "format": "float",
-          "description": "Carbon dioxide emissions (g)",
-          "example": 47882.01
+          "description": "Carbon dioxide emissions (kg)",
+          "example": 107.441829
         },
         "CH4": {
           "type": "number",
           "format": "float",
           "description": "Methane emissions (g)",
-          "example": 1.71
+          "example": 188.7410183
         },
         "N2O": {
           "type": "number",
           "format": "float",
           "description": "Nitrous oxide emissions (g)",
-          "example": 0.17
+          "example": 0.735033811
         },
         "CO2e": {
           "type": "number",
           "format": "float",
-          "description": "Carbon dioxide equivalent emissions (g)",
-          "example": 47974.14
+          "description": "Carbon dioxide equivalent (kg)",
+          "example": 112.3793945
         },
         "CO": {
           "type": "number",
           "format": "float",
-          "description": "Carbon monoxide emissions (g)",
-          "example": 192.29
+          "description": "Carbon monoxide emissions (kg)",
+          "example": 7.227020387
         },
         "NOx": {
           "type": "number",
           "format": "float",
           "description": "Nitrogen oxides emissions (g)",
-          "example": 395.03
+          "example": 169.3149077
         },
-        "NMVOC": {
+        "PM10": {
           "type": "number",
           "format": "float",
-          "description": "Non-methane volatile organic compounds emissions (g)",
-          "example": 12.09
+          "description": "Particulate matter 10 micrometers or less in diameter (g)",
+          "example": 58.51162829
         },
-        "Particulates": {
+        "PM2.5": {
           "type": "number",
           "format": "float",
-          "description": "Particulate matter emissions (g)",
-          "example": 19.82
+          "description": "Particulate matter 2.5 micrometers or less in diameter (g)",
+          "example": 44.44938535
+        },
+        "VOCs": {
+          "type": "number",
+          "format": "float",
+          "description": "Volatile organic compounds (g)",
+          "example": 1.013
         }
       },
       "xml": {
@@ -153,38 +160,38 @@
         "global_warming_air": {
           "type": "number",
           "format": "float",
-          "description": "Global Warming Potentials for Air Emissions (kg CO2 eq/kg substance)",
-          "example": 47.97413521
+          "description": "Global Warming Potentials for Air Emissions (kg CO2 eq)",
+          "example": 112.3793945
         },
         "acidification_air": {
           "type": "number",
           "format": "float",
-          "description": "Acidification Potentials for Air Emissions (kg SO2 eq/kg substance)",
-          "example": 0.011894749
+          "description": "Acidification Potentials for Air Emissions (kg SO2 eq)",
+          "example": 0.12175399
         },
         "hh_particulate_air": {
           "type": "number",
           "format": "float",
-          "description": "Human Health Particulate (and secondary particulate matter precursors) Potentials for Air Emissions (PM2.5eq/kg substance)",
-          "example": 0.000229894
+          "description": "Human Health Particulate (and secondary particulate matter precursors) Potentials for Air Emissions (PM2.5eq)",
+          "example": 0.061646221
         },
         "eutrophication_air": {
           "type": "number",
           "format": "float",
-          "description": "Eutrophication Potentials for Air Emissions (kg N eq/kg substance)",
-          "example": 0.000725385
+          "description": "Eutrophication Potentials for Air Emissions (kg N eq)",
+          "example": 0.007598903
         },
         "eutrophication_water": {
           "type": "number",
           "format": "float",
-          "description": "Eutrophication Potentials for Water Emissions (kg N eq/kg substance)",
-          "example": 0.004766378
+          "description": "Eutrophication Potentials for Water Emissions (kg N eq)",
+          "example": 0.049931075
         },
         "smog_air": {
           "type": "number",
           "format": "float",
-          "description": "Smog Formation Potentials for Air Emissions (kg O3 eq/kg substance)",
-          "example": 0.271093548
+          "description": "Smog Formation Potentials for Air Emissions (kg O3 eq)",
+          "example": 4.606264008
         }
       },
       "xml": {
