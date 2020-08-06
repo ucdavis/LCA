@@ -1,0 +1,9 @@
+| Dataset | Source |
+| ------ | ------ |
+| gpo | eGrid |
+| chp | eGrid |
+| gp | [paper](https://www.sciencedirect.com/science/article/abs/pii/S1352231018308811?via%3Dihub) |
+| diesel | EMFAC |
+| gasoline | EMFAC |
+| kerosene | EPA |
+| transport | GREET |
