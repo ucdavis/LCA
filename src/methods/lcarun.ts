@@ -24,9 +24,9 @@ const calculateLCI = async (lci: Lci[], params: RunParams) => {
     CO2e: 0,
     CO: 0,
     NOx: 0,
-    VOCs: 0, // Volatile Organic Compounds
     PM10: 0,
     PM25: 0, // PM 2.5
+    VOCs: 0, // Volatile Organic Compounds
   };
   const lciTotal: number[] = Array(lci.length).fill(0);
   for (let i = 0; i < lci.length; i++) {
@@ -35,22 +35,19 @@ const calculateLCI = async (lci: Lci[], params: RunParams) => {
     lciTotal[i] = total;
     switch (substance.name) {
       case 'CO2':
-        lciResults.CO2 = total * 1000; // kilograms to grams
+        lciResults.CO2 = total;
         break;
       case 'CH4':
-        lciResults.CH4 = total * 1000;
+        lciResults.CH4 = total * 1000; // kilograms to grams
         break;
       case 'N2O':
         lciResults.N2O = total * 1000;
         break;
       case 'CO':
-        lciResults.CO = total * 1000;
+        lciResults.CO = total;
         break;
       case 'NOx':
         lciResults.NOx = total * 1000;
-        break;
-      case 'VOCs':
-        lciResults.VOCs = total * 1000;
         break;
       case 'PM10':
         lciResults.PM10 = total * 1000;
@@ -58,10 +55,15 @@ const calculateLCI = async (lci: Lci[], params: RunParams) => {
       case 'PM25':
         lciResults.PM25 = total * 1000;
         break;
+      case 'VOCs':
+        lciResults.VOCs = total * 1000;
+        break;
     }
   }
-  lciResults.CO2e = lciResults.CO2 + lciResults.CH4 * 25 + lciResults.N2O * 298;
-
+  lciResults.CO2e =
+    lciResults.CO2 +
+    (lciResults.CH4 / 1000) * 25 +
+    (lciResults.N2O / 1000) * 298;
   return { total: lciTotal, results: lciResults };
 };
 
@@ -104,11 +106,13 @@ const processRow = (row: Lci, params: RunParams) => {
 
   switch (params.technology) {
     case 'GPO': // Generic Power Only
-      total += row.electricity_gpo;
+      total += row.gpo;
       break;
     case 'CHP': // Combined Heat and Power
-      total += row.electricity_chp;
+      total += row.chp;
       break;
+    case 'GP':
+      total += row.gp;
   }
 
   return total;

@@ -7,15 +7,15 @@ export interface RunParams {
 }
 
 export interface LCIresults {
-  CO2: number; // grams
-  CH4: number;
-  N2O: number;
-  CO2e: number;
-  CO: number;
-  NOx: number;
-  VOCs: number; // Volatile Organic Compounds
-  PM10: number;
-  PM25: number; // PM 2.5
+  CO2: number; // kg
+  CH4: number; // g
+  N2O: number; // g
+  CO2e: number; // kg
+  CO: number; // kg
+  NOx: number; // g
+  PM10: number; // g
+  PM25: number; // g PM 2.5
+  VOCs: number; // g Volatile Organic Compounds
 }
 
 export interface LCIAresults {

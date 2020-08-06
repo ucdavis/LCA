@@ -3,8 +3,9 @@ export interface Lci {
   index: number;
   name: string;
   unit: string;
-  electricity_gpo: number; // 1 kWh electricity
-  electricity_chp: number;
+  gpo: number; // generic power only - 1 kWh electricity
+  chp: number; // combined heat and power - 1 kWh electricity
+  gp: number; // gasfication power - 1kWh electricity
   diesel: number; // 1 gal
   gasoline: number; // 1 gal
   kerosene: number; // 1 gal
