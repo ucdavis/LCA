@@ -1,18 +1,35 @@
-import knex from 'knex';
-import { Lci, Traci } from '../models/schema';
+import { readFileSync } from 'fs';
+import { parse } from 'papaparse';
+import { Lci, Traci } from './lca.model';
 import { LCIAresults, LCIresults, RunParams } from './lca.model';
 
-const lcarun = async (params: RunParams, db: knex) => {
-  const schema = process.env.DB_SCHEMA ? process.env.DB_SCHEMA : 'public';
-  const lci: Lci[] = await db
-    .withSchema(schema)
-    .select('*')
-    .from('lci')
-    .orderBy('index');
+const lcarun = async (params: RunParams) => {
+  let lci: Lci[];
+  let traci: Traci[];
+  let data: any;
+
+  let file = readFileSync('./data/lci.csv', 'utf8');
+  parse(file, {
+    header: true,
+    dynamicTyping: true,
+    skipEmptyLines: true,
+    complete: (result) => (data = result.data),
+  });
+  lci = data;
+
+  file = readFileSync('./data/traci.csv', 'utf8');
+  parse(file, {
+    header: true,
+    dynamicTyping: true,
+    skipEmptyLines: true,
+    complete: (result) => (data = result.data),
+  });
+  traci = data;
+
   const lciOut = await calculateLCI(lci, params);
   const lciResults = lciOut.results;
   const lciTotal = lciOut.total;
-  const lciaResults = await calculateLCIA(lciTotal, db);
+  const lciaResults = await calculateLCIA(traci, lciTotal);
   return { lciResults, lciaResults };
 };
 
@@ -25,8 +42,8 @@ const calculateLCI = async (lci: Lci[], params: RunParams) => {
     CO: 0,
     NOx: 0,
     PM10: 0,
-    PM25: 0, // PM 2.5
-    VOCs: 0, // Volatile Organic Compounds
+    PM25: 0,
+    VOCs: 0,
   };
   const lciTotal: number[] = Array(lci.length).fill(0);
   for (let i = 0; i < lci.length; i++) {
@@ -64,16 +81,11 @@ const calculateLCI = async (lci: Lci[], params: RunParams) => {
     lciResults.CO2 +
     (lciResults.CH4 / 1000) * 25 +
     (lciResults.N2O / 1000) * 298;
+
   return { total: lciTotal, results: lciResults };
 };
 
-const calculateLCIA = async (lciTotal: number[], db: knex) => {
-  const schema = process.env.DB_SCHEMA ? process.env.DB_SCHEMA : 'public';
-  const traci: Traci[] = await db
-    .withSchema(schema)
-    .select('*')
-    .from('traci')
-    .orderBy('index');
+const calculateLCIA = async (traci: Traci[], lciTotal: number[]) => {
   const lcia: LCIAresults = {
     global_warming_air: 0,
     acidification_air: 0,
@@ -97,22 +109,23 @@ const calculateLCIA = async (lciTotal: number[], db: knex) => {
   return lcia;
 };
 
-const processRow = (row: Lci, params: RunParams) => {
+const processRow = (substance: Lci, params: RunParams) => {
   let total =
-    row.diesel * params.diesel +
-    row.gasoline * params.gasoline +
-    row.kerosene * params.jetfuel +
-    row.transport * params.distance;
+    substance.diesel * params.diesel +
+    substance.gasoline * params.gasoline +
+    substance.kerosene * params.jetfuel +
+    substance.transport * params.distance;
 
   switch (params.technology) {
     case 'GPO': // Generic Power Only
-      total += row.gpo;
+      total += substance.gpo;
       break;
     case 'CHP': // Combined Heat and Power
-      total += row.chp;
+      total += substance.chp;
       break;
-    case 'GP':
-      total += row.gp;
+    case 'GP': // Gasification Power
+      total += substance.gp;
+      break;
   }
 
   return total;

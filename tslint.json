@@ -206,7 +206,6 @@
             "never"
         ],
         "no-constant-condition": true,
-        "no-var-requires": true,
         "ordered-imports": true,
         "no-irregular-whitespace": true
     }
