@@ -62,3 +62,6 @@ typings/
 
 # ignore src folder
 src/
+
+# ignore yml
+.yml
