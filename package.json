@@ -8,7 +8,7 @@
     "type": "git",
     "url": "git+https://github.com/ucdavis/LCA.git"
   },
-  "author": "Scott Kirkland <srkirkland@gmail.com>",
+  "author": "Kaiyan Li <kkyli@ucdavis.edu>",
   "license": "MIT",
   "private": false,
   "scripts": {
@@ -40,9 +40,9 @@
   },
   "homepage": "https://github.com/ucdavis/LCA#readme",
   "keywords": [
+    "woody biomass",
     "life cycle assessment",
-    "environmental analysis",
-    "environmental impacts",
-    "forestry"
+    "criteria pollutants",
+    "environmental impacts"
   ]
 }
