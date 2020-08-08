@@ -1,6 +1,6 @@
 {
   "name": "@ucdavis/lca",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Life Cycle Assessment",
   "main": "./out/index.js",
   "types": "./out/index.d.ts",
@@ -8,7 +8,7 @@
     "type": "git",
     "url": "git+https://github.com/ucdavis/LCA.git"
   },
-  "author": "Scott Kirkland <srkirkland@gmail.com>",
+  "author": "Kaiyan Li <kkyli@ucdavis.edu>",
   "license": "MIT",
   "private": false,
   "scripts": {
@@ -34,5 +34,15 @@
     "tslint": "^5.12.1",
     "tslint-eslint-rules": "^5.4.0",
     "typescript": "^3.3.1"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/ucdavis/LCA/issues"
+  },
+  "homepage": "https://github.com/ucdavis/LCA#readme",
+  "keywords": [
+    "woody biomass",
+    "life cycle assessment",
+    "criteria pollutants",
+    "environmental impacts"
+  ]
 }
