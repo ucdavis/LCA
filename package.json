@@ -1,6 +1,6 @@
 {
   "name": "@ucdavis/lca",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Life Cycle Assessment",
   "main": "./out/index.js",
   "types": "./out/index.d.ts",
@@ -40,8 +40,8 @@
   },
   "homepage": "https://github.com/ucdavis/LCA#readme",
   "keywords": [
-    "woody biomass",
     "life cycle assessment",
+    "woody biomass",
     "criteria pollutants",
     "environmental impacts"
   ]

@@ -64,4 +64,4 @@ typings/
 src/
 
 # ignore yml
-.yml
+*.yml
