@@ -1,7 +1,5 @@
 # Life Cycle Assessment
 
-## About
-
 LCA is developed for assessing the environmental impacts of utilizing forest residues for generating electricity throughout its life cycle, from feedstock acquisition and transportation to conversion, funded by California Energy Commission.
 
 ## Installation
