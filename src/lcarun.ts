@@ -44,6 +44,7 @@ const calculateLCI = async (lci: Lci[], params: RunParams) => {
     PM10: 0,
     PM25: 0,
     VOCs: 0,
+    CI: 0
   };
   const lciTotal: number[] = Array(lci.length).fill(0);
   for (let i = 0; i < lci.length; i++) {
@@ -81,6 +82,15 @@ const calculateLCI = async (lci: Lci[], params: RunParams) => {
     lciResults.CO2 +
     (lciResults.CH4 / 1000) * 25 +
     (lciResults.N2O / 1000) * 298;
+
+  const carbonRatioVOC = 0.85;
+  const carbonRatioCO = 12 / 28;
+  const carbonRatioCO2 = 12 / 44;
+  const gwpVOC = carbonRatioVOC / carbonRatioCO2;
+  const gwpCO = carbonRatioCO / carbonRatioCO2;
+
+  lciResults.CI = lciResults.VOCs * gwpVOC + lciResults.CO * 1000 * gwpCO + lciResults.CO2e * 1000; // g CO2e/kWh
+  lciResults.CI = lciResults.CI / 3.6; // g CO2e/MJ
 
   return { total: lciTotal, results: lciResults };
 };
