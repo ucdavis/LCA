@@ -90,7 +90,6 @@ const calculateLCI = async (lci: Lci[], params: RunParams) => {
   const gwpCO = carbonRatioCO / carbonRatioCO2;
 
   lciResults.CI = lciResults.VOCs * gwpVOC + lciResults.CO * 1000 * gwpCO + lciResults.CO2e * 1000; // g CO2e/kWh
-  lciResults.CI = lciResults.CI / 3.6; // g CO2e/MJ
 
   return { total: lciTotal, results: lciResults };
 };

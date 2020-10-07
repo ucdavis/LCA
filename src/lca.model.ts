@@ -40,7 +40,7 @@ export interface LCIresults {
   PM10: number; // g PM 10
   PM25: number; // g PM 2.5
   VOCs: number; // g Volatile Organic Compounds
-  CI: number; // Carbon Intensity (g CO2e/MJ)
+  CI: number; // Carbon Intensity (g CO2e)
 }
 
 export interface LCIAresults {

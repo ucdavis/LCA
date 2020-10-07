@@ -119,6 +119,12 @@
           "description": "Carbon dioxide equivalent (kg)",
           "example": 112.3793945
         },
+        "CI": {
+          "type": "number",
+          "format": "float",
+          "description": "Carbon intensity (g CO2e)",
+          "example": 150
+        },
         "CO": {
           "type": "number",
           "format": "float",
