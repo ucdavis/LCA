@@ -99,61 +99,61 @@
           "type": "number",
           "format": "float",
           "description": "Carbon dioxide emissions (kg)",
-          "example": 107.441829
+          "example": 175.623578995
         },
         "CH4": {
           "type": "number",
           "format": "float",
           "description": "Methane emissions (g)",
-          "example": 188.7410183
+          "example": 188.741018
         },
         "N2O": {
           "type": "number",
           "format": "float",
           "description": "Nitrous oxide emissions (g)",
-          "example": 0.735033811
-        },
-        "CO2e": {
-          "type": "number",
-          "format": "float",
-          "description": "Carbon dioxide equivalent (kg)",
-          "example": 112.3793945
-        },
-        "CI": {
-          "type": "number",
-          "format": "float",
-          "description": "Carbon intensity (g CO2e)",
-          "example": 150
+          "example": 0.7350340000000001
         },
         "CO": {
           "type": "number",
           "format": "float",
           "description": "Carbon monoxide emissions (kg)",
-          "example": 7.227020387
+          "example": 7.227020384000001
         },
         "NOx": {
           "type": "number",
           "format": "float",
           "description": "Nitrogen oxides emissions (g)",
-          "example": 169.3149077
+          "example": 169.314906
         },
         "PM10": {
           "type": "number",
           "format": "float",
           "description": "Particulate matter 10 micrometers or less in diameter (g)",
-          "example": 58.51162829
+          "example": 58.511628
         },
         "PM2.5": {
           "type": "number",
           "format": "float",
           "description": "Particulate matter 2.5 micrometers or less in diameter (g)",
-          "example": 44.44938535
+          "example": 44.44938199999999
         },
         "VOCs": {
           "type": "number",
           "format": "float",
           "description": "Volatile organic compounds (g)",
           "example": 1.013
+        },
+        "CO2e": {
+          "type": "number",
+          "format": "float",
+          "description": "Carbon dioxide equivalent (kg)",
+          "example": 180.561144577
+        },
+        "CI": {
+          "type": "number",
+          "format": "float",
+          "description": "Carbon intensity (g CO2e)",
+          "example": 191921.0480780476
         }
       },
       "xml": {
@@ -167,37 +167,37 @@
           "type": "number",
           "format": "float",
           "description": "Global Warming Potentials for Air Emissions (kg CO2 eq)",
-          "example": 112.3793945
+          "example": 180.561144577
         },
         "acidification_air": {
           "type": "number",
           "format": "float",
           "description": "Acidification Potentials for Air Emissions (kg SO2 eq)",
-          "example": 0.12175399
+          "example": 0.12175377272
         },
         "hh_particulate_air": {
           "type": "number",
           "format": "float",
           "description": "Human Health Particulate (and secondary particulate matter precursors) Potentials for Air Emissions (PM2.5eq)",
-          "example": 0.061646221
+          "example": 0.06164621335082958
         },
         "eutrophication_air": {
           "type": "number",
           "format": "float",
           "description": "Eutrophication Potentials for Air Emissions (kg N eq)",
-          "example": 0.007598903
+          "example": 0.007598890021140001
         },
         "eutrophication_water": {
           "type": "number",
           "format": "float",
           "description": "Eutrophication Potentials for Water Emissions (kg N eq)",
-          "example": 0.049931075
+          "example": 0.04993098643169668
         },
         "smog_air": {
           "type": "number",
           "format": "float",
           "description": "Smog Formation Potentials for Air Emissions (kg O3 eq)",
-          "example": 4.606264008
+          "example": 4.606263967607151
         }
       },
       "xml": {

@@ -38,12 +38,12 @@ const calculateLCI = async (lci: Lci[], params: RunParams) => {
     CO2: 0,
     CH4: 0,
     N2O: 0,
-    CO2e: 0,
     CO: 0,
     NOx: 0,
     PM10: 0,
     PM25: 0,
     VOCs: 0,
+    CO2e: 0,
     CI: 0
   };
   const lciTotal: number[] = Array(lci.length).fill(0);

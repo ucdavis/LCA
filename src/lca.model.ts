@@ -34,12 +34,12 @@ export interface LCIresults {
   CO2: number; // kg
   CH4: number; // g
   N2O: number; // g
-  CO2e: number; // kg // CO2 equivalent
   CO: number; // kg
   NOx: number; // g
   PM10: number; // g PM 10
   PM25: number; // g PM 2.5
   VOCs: number; // g Volatile Organic Compounds
+  CO2e: number; // kg // CO2 equivalent
   CI: number; // Carbon Intensity (g CO2e)
 }
 
