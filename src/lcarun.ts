@@ -40,8 +40,11 @@ const calculateLCI = async (lci: Lci[], params: RunParams) => {
     N2O: 0,
     CO: 0,
     NOx: 0,
+    NH3: 0,
     PM10: 0,
     PM25: 0,
+    SO2: 0,
+    SOx: 0,
     VOCs: 0,
     CO2e: 0,
     CI: 0
@@ -67,11 +70,20 @@ const calculateLCI = async (lci: Lci[], params: RunParams) => {
       case 'NOx':
         lciResults.NOx = total * 1000;
         break;
+      case 'NH3':
+        lciResults.NH3 = total * 1000;
+        break;
       case 'PM10':
         lciResults.PM10 = total * 1000;
         break;
       case 'PM25':
         lciResults.PM25 = total * 1000;
+        break;
+      case 'SO2':
+        lciResults.SO2 = total * 1000;
+        break;
+      case 'SOx':
+        lciResults.SOx = total * 1000;
         break;
       case 'VOCs':
         lciResults.VOCs = total * 1000;
