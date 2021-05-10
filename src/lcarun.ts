@@ -2,13 +2,15 @@ import { readFileSync } from 'fs';
 import { parse } from 'papaparse';
 import { Lci, Traci } from './lca.model';
 import { LCIAresults, LCIresults, RunParams } from './lca.model';
+const path = require('path');
 
 const lcarun = async (params: RunParams) => {
   let lci: Lci[];
   let traci: Traci[];
   let data: any;
 
-  let file = readFileSync('./data/lci.csv', 'utf8');
+  const lciData = path.join(__dirname, '../data/lci.csv');
+  let file = readFileSync(lciData, 'utf8');
   parse(file, {
     header: true,
     dynamicTyping: true,
@@ -17,7 +19,8 @@ const lcarun = async (params: RunParams) => {
   });
   lci = data;
 
-  file = readFileSync('./data/traci.csv', 'utf8');
+  const traciData = path.join(__dirname, '../data/traci.csv');
+  file = readFileSync(traciData, 'utf8');
   parse(file, {
     header: true,
     dynamicTyping: true,
