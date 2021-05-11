@@ -99,79 +99,61 @@
           "type": "number",
           "format": "float",
           "description": "Carbon dioxide emissions (kg)",
-          "example": 175.623578995
+          "example": 177.491171585
         },
         "CH4": {
           "type": "number",
           "format": "float",
           "description": "Methane emissions (g)",
-          "example": 188.741018
+          "example": 12.534360208
         },
         "N2O": {
           "type": "number",
           "format": "float",
           "description": "Nitrous oxide emissions (g)",
-          "example": 0.7350340000000001
+          "example": 2.218010568
         },
         "CO": {
           "type": "number",
           "format": "float",
-          "description": "Carbon monoxide emissions (kg)",
-          "example": 7.227020384000001
+          "description": "Carbon monoxide emissions (g)",
+          "example": 7312.607990415001
         },
         "NOx": {
           "type": "number",
           "format": "float",
           "description": "Nitrogen oxides emissions (g)",
-          "example": 169.314906
-        },
-        "NH3": {
-          "type": "number",
-          "format": "float",
-          "description": "Ammonia emissions (g)",
-          "example": 0.842604
+          "example": 526.092786861
         },
         "PM10": {
           "type": "number",
           "format": "float",
           "description": "Particulate matter 10 micrometers or less in diameter (g)",
-          "example": 58.511628
+          "example": 63.066463929
         },
         "PM2.5": {
           "type": "number",
           "format": "float",
           "description": "Particulate matter 2.5 micrometers or less in diameter (g)",
-          "example": 44.44938199999999
-        },
-        "SO2": {
-          "type": "number",
-          "format": "float",
-          "description": "Sulfur dioxide emissions (g)",
-          "example": 0.336581
+          "example": 45.592853049999995
         },
         "SOx": {
           "type": "number",
           "format": "float",
           "description": "Sulfur oxides emissions (g)",
-          "example": 1.312662
-        },
-        "VOCs": {
-          "type": "number",
-          "format": "float",
-          "description": "Volatile organic compounds (g)",
-          "example": 1.013
+          "example": 1.9363743
         },
         "CO2e": {
           "type": "number",
           "format": "float",
           "description": "Carbon dioxide equivalent (kg)",
-          "example": 180.561144577
+          "example": 178.46549773946398
         },
         "CI": {
           "type": "number",
           "format": "float",
-          "description": "Carbon intensity (g CO2e)",
-          "example": 191921.0480780476
+          "description": "Carbon intensity (kg CO2e)",
+          "example": 189.956738867259
         }
       },
       "xml": {
@@ -185,37 +167,37 @@
           "type": "number",
           "format": "float",
           "description": "Global Warming Potentials for Air Emissions (kg CO2 eq)",
-          "example": 180.561144577
+          "example": 178.46549773946398
         },
         "acidification_air": {
           "type": "number",
           "format": "float",
           "description": "Acidification Potentials for Air Emissions (kg SO2 eq)",
-          "example": 0.12175377272
+          "example": 0.3702013251027
         },
         "hh_particulate_air": {
           "type": "number",
           "format": "float",
           "description": "Human Health Particulate (and secondary particulate matter precursors) Potentials for Air Emissions (PM2.5eq)",
-          "example": 0.06164621335082958
+          "example": 0.06635759261601358
         },
         "eutrophication_air": {
           "type": "number",
           "format": "float",
           "description": "Eutrophication Potentials for Air Emissions (kg N eq)",
-          "example": 0.007598890021140001
+          "example": 0.023300649530073693
         },
         "eutrophication_water": {
           "type": "number",
           "format": "float",
           "description": "Eutrophication Potentials for Water Emissions (kg N eq)",
-          "example": 0.04993098643169668
+          "example": 0.1531045208303049
         },
         "smog_air": {
           "type": "number",
           "format": "float",
           "description": "Smog Formation Potentials for Air Emissions (kg O3 eq)",
-          "example": 4.606263967607151
+          "example": 13.450653094200687
         }
       },
       "xml": {
