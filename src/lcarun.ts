@@ -43,12 +43,9 @@ const calculateLCI = async (lci: Lci[], params: RunParams) => {
     N2O: 0,
     CO: 0,
     NOx: 0,
-    NH3: 0,
     PM10: 0,
     PM25: 0,
-    SO2: 0,
     SOx: 0,
-    VOCs: 0,
     CO2e: 0,
     CI: 0
   };
@@ -56,40 +53,39 @@ const calculateLCI = async (lci: Lci[], params: RunParams) => {
   for (let i = 0; i < lci.length; i++) {
     const substance = lci[i];
     const total = processRow(substance, params);
-    lciTotal[i] = total;
+    // lciTotal[i] = total;
     switch (substance.name) {
       case 'CO2':
         lciResults.CO2 = total;
+        lciTotal[i] = total;
         break;
       case 'CH4':
-        lciResults.CH4 = total * 1000; // kilograms to grams
+        lciResults.CH4 = total;
+        lciTotal[i] = total / 1000; // g to kg
         break;
       case 'N2O':
-        lciResults.N2O = total * 1000;
+        lciResults.N2O = total;
+        lciTotal[i] = total / 1000; // g to kg
         break;
       case 'CO':
         lciResults.CO = total;
+        lciTotal[i] = total / 1000; // g to kg
         break;
       case 'NOx':
-        lciResults.NOx = total * 1000;
-        break;
-      case 'NH3':
-        lciResults.NH3 = total * 1000;
+        lciResults.NOx = total;
+        lciTotal[i] = total / 1000; // g to kg
         break;
       case 'PM10':
-        lciResults.PM10 = total * 1000;
+        lciResults.PM10 = total;
+        lciTotal[i] = total / 1000; // g to kg
         break;
       case 'PM25':
-        lciResults.PM25 = total * 1000;
-        break;
-      case 'SO2':
-        lciResults.SO2 = total * 1000;
+        lciResults.PM25 = total;
+        lciTotal[i] = total / 1000; // g to kg
         break;
       case 'SOx':
-        lciResults.SOx = total * 1000;
-        break;
-      case 'VOCs':
-        lciResults.VOCs = total * 1000;
+        lciResults.SOx = total;
+        lciTotal[i] = total / 1000; // g to kg
         break;
     }
   }
@@ -104,7 +100,7 @@ const calculateLCI = async (lci: Lci[], params: RunParams) => {
   const gwpVOC = carbonRatioVOC / carbonRatioCO2;
   const gwpCO = carbonRatioCO / carbonRatioCO2;
 
-  lciResults.CI = lciResults.VOCs * gwpVOC + lciResults.CO * 1000 * gwpCO + lciResults.CO2e * 1000; // g CO2e/kWh
+  lciResults.CI = lciResults.CO * gwpCO + lciResults.CO2e * 1000; // g CO2e/kWh
 
   return { total: lciTotal, results: lciResults };
 };
