@@ -34,13 +34,13 @@ export interface LCIresults {
   CO2: number; // kg
   CH4: number; // g
   N2O: number; // g
-  CO: number; // kg
+  CO: number; // g
   NOx: number; // g
   PM10: number; // g PM 10
   PM25: number; // g PM 2.5
   SOx: number; // g
-  CO2e: number; // kg // CO2 equivalent
-  CI: number; // Carbon Intensity (g CO2e)
+  VOC: number; // g
+  CI: number; // Carbon Intensity (kg CO2e)
 }
 
 export interface LCIAresults {
