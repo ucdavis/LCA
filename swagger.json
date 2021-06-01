@@ -143,17 +143,17 @@
           "description": "Sulfur oxides emissions (g)",
           "example": 1.9363743
         },
-        "CO2e": {
+        "VOC": {
           "type": "number",
           "format": "float",
-          "description": "Carbon dioxide equivalent (kg)",
-          "example": 178.46549773946398
+          "description": "Volatile organic compounds (g)",
+          "example": 953.175717263
         },
         "CI": {
           "type": "number",
           "format": "float",
           "description": "Carbon intensity (kg CO2e)",
-          "example": 189.956738867259
+          "example": 192.92746985272868
         }
       },
       "xml": {
@@ -179,7 +179,7 @@
           "type": "number",
           "format": "float",
           "description": "Human Health Particulate (and secondary particulate matter precursors) Potentials for Air Emissions (PM2.5eq)",
-          "example": 0.06635759261601358
+          "example": 0.06903290258021133
         },
         "eutrophication_air": {
           "type": "number",
@@ -197,7 +197,7 @@
           "type": "number",
           "format": "float",
           "description": "Smog Formation Potentials for Air Emissions (kg O3 eq)",
-          "example": 13.450653094200687
+          "example": 16.876735318933957
         }
       },
       "xml": {
