@@ -19,17 +19,13 @@
     }
   ],
   "paths": {
-    "/lcarun": {
+    "/lca": {
       "get": {
-        "tags": [
-          "lca"
-        ],
+        "tags": ["lca"],
         "summary": "Runs LCA from given input",
         "description": "",
         "operationId": "runLCA",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "technology",
@@ -37,11 +33,7 @@
             "in": "query",
             "required": true,
             "type": "string",
-            "enum": [
-              "GPO",
-              "CHP",
-              "GP"
-            ],
+            "enum": ["GPO", "CHP", "GP"],
             "default": "CHP"
           },
           {
@@ -92,7 +84,7 @@
     }
   },
   "definitions": {
-    "LciResults": {
+    "LifeCycleEmissions": {
       "type": "object",
       "properties": {
         "CO2": {
@@ -160,7 +152,7 @@
         "name": "LciResults"
       }
     },
-    "LciaResults": {
+    "LifeCycleImpacts": {
       "type": "object",
       "properties": {
         "global_warming_air": {
@@ -207,11 +199,11 @@
     "Output": {
       "type": "object",
       "properties": {
-        "LciResults": {
-          "$ref": "#/definitions/LciResults"
+        "lifeCycleEmissions": {
+          "$ref": "#/definitions/LifeCycleEmissions"
         },
-        "LciaResults": {
-          "$ref": "#/definitions/LciaResults"
+        "lifeCycleImpacts": {
+          "$ref": "#/definitions/LifeCycleImpacts"
         }
       },
       "xml": {
