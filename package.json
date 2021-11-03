@@ -1,9 +1,8 @@
 {
   "name": "@ucdavis/lca",
-  "version": "1.5.0",
-  "description": "Life Cycle Assessment",
+  "version": "1.5.1",
+  "description": "Life cycle assessment of the utilization of woody biomass for electricity generation",
   "main": "index.js",
-  "types": "index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ucdavis/LCA.git"
@@ -43,7 +42,9 @@
   "keywords": [
     "life cycle assessment",
     "woody biomass",
-    "criteria pollutants",
+    "criteria air pollutants",
+    "greenhouse gases",
+    "life cycle emissions",
     "environmental impacts"
   ]
 }

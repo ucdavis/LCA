@@ -1,7 +1,7 @@
 import { readFileSync } from 'fs';
 import { parse } from 'papaparse';
-import { Lci, LifeCycleEmissions, LifeCycleImpacts, Traci } from './lca.model';
-import { LcaInputs } from './lca.model';
+import { Lci, LifeCycleEmissions, LifeCycleImpacts, Traci } from './model';
+import { LcaInputs } from './model';
 
 const GENERIC_POWER_ONLY = 'GPO';
 const COMBINED_HEAT_POWER = 'CHP';

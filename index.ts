@@ -1,7 +1,7 @@
 import express from 'express';
 import swaggerUi from 'swagger-ui-express';
-import { lifeCycleAnalysis } from './lca';
-import { LcaInputs } from './lca.model';
+import { lifeCycleAnalysis } from './function';
+import { LcaInputs } from './model';
 const swaggerDocument = require('./swagger.json');
 const url = require('url');
 
