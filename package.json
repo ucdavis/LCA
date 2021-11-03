@@ -1,6 +1,6 @@
 {
   "name": "@ucdavis/lca",
-  "version": "1.2.0",
+  "version": "1.5.0",
   "description": "Life Cycle Assessment",
   "main": "index.js",
   "types": "index.d.ts",
