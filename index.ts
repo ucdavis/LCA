@@ -1,18 +1,18 @@
 import express from 'express';
 import swaggerUi from 'swagger-ui-express';
-import { RunParams } from './lca.model';
-import { lcarun } from './lcarun';
-const swaggerDocument = require('../swagger.json');
+import { lifeCycleAnalysis } from './lca';
+import { LcaInputs } from './lca.model';
+const swaggerDocument = require('./swagger.json');
 const url = require('url');
 
 const app = express();
 
 const port = process.env.PORT || 3000;
 
-app.get('/lcarun', async (req, res) => {
+app.get('/lca', async (req, res) => {
   const urlParsed = url.parse(req.url, true);
-  const params: RunParams = urlParsed.query;
-  const result = await lcarun(params);
+  const params: LcaInputs = urlParsed.query;
+  const result = await lifeCycleAnalysis(params);
   res.status(200).json(result);
 });
 

@@ -1,9 +1,9 @@
 {
   "name": "@ucdavis/lca",
-  "version": "1.2.0",
+  "version": "1.5.0",
   "description": "Life Cycle Assessment",
-  "main": "./out/index.js",
-  "types": "./out/index.d.ts",
+  "main": "index.js",
+  "types": "index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ucdavis/LCA.git"
@@ -14,11 +14,11 @@
   "scripts": {
     "prebuild": "tslint -c tslint.json -p tsconfig.json",
     "build": "tsc",
-    "dev": "npm run build && node ./out/server.js",
-    "watch": "nodemon --watch . -i out -e ts --exec npm run dev",
-    "start": "node ./out/server.js",
+    "dev": "npm run build && node .",
+    "start": "node ./index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepublishOnly": "tsc -p ./ --outDir out/"
+    "prepublishOnly": "npm run build",
+    "clean": "rm *.js *.js.map *.d.ts"
   },
   "dependencies": {
     "express": "^4.16.4",

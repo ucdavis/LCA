@@ -1,4 +1,4 @@
-export interface RunParams {
+export interface LcaInputs {
   technology: string; // conversion technology
   diesel: number; // gal/kWh electricity
   gasoline: number; // gal/kWh electricity
@@ -30,7 +30,7 @@ export interface Traci {
   smog_air: number; // Smog Air (kg O3 eq / kg substance)
 }
 
-export interface LCIresults {
+export interface LifeCycleEmissions {
   CO2: number; // kg
   CH4: number; // g
   N2O: number; // g
@@ -43,7 +43,7 @@ export interface LCIresults {
   CI: number; // Carbon Intensity (kg CO2e)
 }
 
-export interface LCIAresults {
+export interface LifeCycleImpacts {
   global_warming_air: number; // Global Warming Air (kg CO2 eq)
   acidification_air: number; // Acidification Air (kg SO2 eq)
   hh_particulate_air: number; // HH Particulate Air (PM2.5 eq)
