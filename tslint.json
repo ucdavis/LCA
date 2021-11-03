@@ -198,7 +198,7 @@
         ],
         "linebreak-style": [
             true,
-            "LF"
+            "CRLF"
         ],
         "no-namespace": true,
         "space-in-parens": [
