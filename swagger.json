@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "description": "This is a service for running LCA, funded by California Energy Commission",
-    "version": "1.0.0",
+    "version": "1.5.2",
     "title": "Life Cycle Assessment",
     "contact": {
       "email": "kkyli@ucdavis.edu"
@@ -12,17 +12,11 @@
       "url": "https://github.com/ucdavis/LCA/blob/master/LICENSE"
     }
   },
-  "tags": [
-    {
-      "name": "LCA",
-      "description": "Life Cycle Assessment (LCA)"
-    }
-  ],
   "paths": {
     "/lca": {
       "get": {
-        "tags": ["lca"],
-        "summary": "Runs LCA from given input",
+        "tags": ["Life cycle emissions accounting"],
+        "summary": "Compute life cycle emissions and impacts",
         "description": "",
         "operationId": "runLCA",
         "produces": ["application/json"],
@@ -73,7 +67,7 @@
           "200": {
             "description": "successful operation",
             "schema": {
-              "$ref": "#/definitions/Output"
+              "$ref": "#/definitions/LcaOutputs"
             }
           },
           "400": {
@@ -84,6 +78,20 @@
     }
   },
   "definitions": {
+    "LcaOutputs": {
+      "type": "object",
+      "properties": {
+        "lifeCycleEmissions": {
+          "$ref": "#/definitions/LifeCycleEmissions"
+        },
+        "lifeCycleImpacts": {
+          "$ref": "#/definitions/LifeCycleImpacts"
+        }
+      },
+      "xml": {
+        "name": "LcaOutputs"
+      }
+    },
     "LifeCycleEmissions": {
       "type": "object",
       "properties": {
@@ -194,20 +202,6 @@
       },
       "xml": {
         "name": "LciaResults"
-      }
-    },
-    "Output": {
-      "type": "object",
-      "properties": {
-        "lifeCycleEmissions": {
-          "$ref": "#/definitions/LifeCycleEmissions"
-        },
-        "lifeCycleImpacts": {
-          "$ref": "#/definitions/LifeCycleImpacts"
-        }
-      },
-      "xml": {
-        "name": "Output"
       }
     }
   },
