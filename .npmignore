@@ -60,8 +60,11 @@ typings/
 # next.js build output
 .next
 
-# ignore src folder
-src/
+# source
+*.ts
 
 # ignore yml
 *.yml
+
+# ignore swagger
+swagger.json
