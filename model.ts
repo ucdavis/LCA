@@ -6,6 +6,11 @@ export interface LcaInputs {
   distance: number; // mile/kWh electricity
 }
 
+export interface LcaOutputs {
+  lifeCycleEmissions: LifeCycleEmissions;
+  lifeCycleImpacts: LifeCycleImpacts;
+}
+
 export interface Lci {
   index: number;
   name: string; // substance name

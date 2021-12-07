@@ -1,6 +1,12 @@
 import { readFileSync } from 'fs';
 import { parse } from 'papaparse';
-import { Lci, LifeCycleEmissions, LifeCycleImpacts, Traci } from './model';
+import {
+  LcaOutputs,
+  Lci,
+  LifeCycleEmissions,
+  LifeCycleImpacts,
+  Traci,
+} from './model';
 import { LcaInputs } from './model';
 
 const path = require('path');
@@ -9,7 +15,32 @@ const GENERIC_POWER_ONLY = 'GPO';
 const COMBINED_HEAT_POWER = 'CHP';
 const GASIFICATION_POWER = 'GP';
 
-export const lifeCycleAnalysis = async (params: LcaInputs) => {
+export const lifeCycleAnalysis = async (
+  params: LcaInputs
+): Promise<LcaOutputs> => {
+  const lcaOutputs: LcaOutputs = {
+    lifeCycleEmissions: {
+      CO2: 0,
+      CH4: 0,
+      N2O: 0,
+      CO: 0,
+      NOx: 0,
+      PM10: 0,
+      PM25: 0,
+      SOx: 0,
+      VOC: 0,
+      CI: 0,
+    },
+    lifeCycleImpacts: {
+      global_warming_air: 0,
+      acidification_air: 0,
+      hh_particulate_air: 0,
+      eutrophication_air: 0,
+      eutrophication_water: 0,
+      smog_air: 0,
+    },
+  };
+
   let lci: Lci[];
   let traci: Traci[];
   let data: any;
@@ -39,10 +70,16 @@ export const lifeCycleAnalysis = async (params: LcaInputs) => {
     traci,
     lifeCycleEmissions
   );
+
+  lcaOutputs.lifeCycleEmissions = lifeCycleEmissions;
+  lcaOutputs.lifeCycleImpacts = lifeCycleImpacts;
   return { lifeCycleEmissions, lifeCycleImpacts };
 };
 
-const computeLifeCycleEmissions = async (lci: Lci[], params: LcaInputs) => {
+const computeLifeCycleEmissions = async (
+  lci: Lci[],
+  params: LcaInputs
+): Promise<LifeCycleEmissions> => {
   const lifeCycleEmissions: LifeCycleEmissions = {
     CO2: 0,
     CH4: 0,
@@ -109,7 +146,7 @@ const computeLifeCycleEmissions = async (lci: Lci[], params: LcaInputs) => {
 const computeLifeCycleImpacts = async (
   traci: Traci[],
   lifeCycleEmissions: LifeCycleEmissions
-) => {
+): Promise<LifeCycleImpacts> => {
   const lifeCycleImpacts: LifeCycleImpacts = {
     global_warming_air: 0,
     acidification_air: 0,
