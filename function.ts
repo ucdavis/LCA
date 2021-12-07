@@ -3,6 +3,8 @@ import { parse } from 'papaparse';
 import { Lci, LifeCycleEmissions, LifeCycleImpacts, Traci } from './model';
 import { LcaInputs } from './model';
 
+const path = require('path');
+
 const GENERIC_POWER_ONLY = 'GPO';
 const COMBINED_HEAT_POWER = 'CHP';
 const GASIFICATION_POWER = 'GP';
@@ -12,7 +14,7 @@ export const lifeCycleAnalysis = async (params: LcaInputs) => {
   let traci: Traci[];
   let data: any;
 
-  const lciDataPath = './data/lci.csv';
+  const lciDataPath = path.join(__dirname, './data/lci.csv');
   let file = readFileSync(lciDataPath, 'utf8');
   parse(file, {
     header: true,
@@ -22,7 +24,7 @@ export const lifeCycleAnalysis = async (params: LcaInputs) => {
   });
   lci = data;
 
-  const traciDataPath = './data/traci.csv';
+  const traciDataPath = path.join(__dirname, './data/traci.csv');
   file = readFileSync(traciDataPath, 'utf8');
   parse(file, {
     header: true,
