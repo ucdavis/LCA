@@ -119,8 +119,8 @@ const computeLifeCycleEmissions = async (
   const carbonRatioCO2 = 12 / 44;
   const gwpVOC = carbonRatioVOC / carbonRatioCO2;
   const gwpCO = carbonRatioCO / carbonRatioCO2;
-  const gwpCH4 = 25;
-  const gwpN2O = 298;
+  const gwpCH4 = 28; // IPCC AR5 standard
+  const gwpN2O = 265; // IPCC AR5 standard
 
   lifeCycleEmissions.CI =
     (lifeCycleEmissions.CO / 1000) * gwpCO +
