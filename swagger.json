@@ -61,6 +61,22 @@
             "required": true,
             "type": "number",
             "default": 20
+          },
+          {
+            "name": "construction",
+            "description": "The capital cost for constructing a biopower facility, in 2002 dollars",
+            "in": "query",
+            "required": true,
+            "type": "number",
+            "default": 0
+          },
+          {
+            "name": "equipment",
+            "description": "The purchase price of a piece of equipment before tax, in 2002 dollars",
+            "in": "query",
+            "required": true,
+            "type": "number",
+            "default": 0
           }
         ],
         "responses": {
@@ -99,61 +115,61 @@
           "type": "number",
           "format": "float",
           "description": "Carbon dioxide emissions (kg)",
-          "example": 163.860634217
+          "example": 216.52
         },
         "CH4": {
           "type": "number",
           "format": "float",
           "description": "Methane emissions (g)",
-          "example": 12.534619785000002
+          "example": 12.53
         },
         "N2O": {
           "type": "number",
           "format": "float",
           "description": "Nitrous oxide emissions (g)",
-          "example": 2.218475959
+          "example": 2.22
         },
         "CO": {
           "type": "number",
           "format": "float",
           "description": "Carbon monoxide emissions (g)",
-          "example": 6643.041930035
+          "example": 8802.96
         },
         "NOx": {
           "type": "number",
           "format": "float",
           "description": "Nitrogen oxides emissions (g)",
-          "example": 513.665352718
+          "example": 572.42
         },
         "PM10": {
           "type": "number",
           "format": "float",
           "description": "Particulate matter 10 micrometers or less in diameter (g)",
-          "example": 57.586551545999995
+          "example": 102.06
         },
         "PM2.5": {
           "type": "number",
           "format": "float",
           "description": "Particulate matter 2.5 micrometers or less in diameter (g)",
-          "example": 44.105951239
+          "example": 77.84
         },
         "SOx": {
           "type": "number",
           "format": "float",
           "description": "Sulfur oxides emissions (g)",
-          "example": 33.512162956
+          "example": 34.06
         },
         "VOC": {
           "type": "number",
           "format": "float",
           "description": "Volatile organic compounds (g)",
-          "example": 866.382836153
+          "example": 176.14
         },
         "CI": {
           "type": "number",
           "format": "float",
           "description": "Carbon intensity (kg CO2e)",
-          "example": 177.97439794347218
+          "example": 231.85
         }
       },
       "xml": {
@@ -167,37 +183,31 @@
           "type": "number",
           "format": "float",
           "description": "Global Warming Potentials for Air Emissions (kg CO2 eq)",
-          "example": 164.835105547407
+          "example": 217.46
         },
         "acidification_air": {
           "type": "number",
           "format": "float",
           "description": "Acidification Potentials for Air Emissions (kg SO2 eq)",
-          "example": 0.39307790985859997
+          "example": 0.43
         },
         "hh_particulate_air": {
           "type": "number",
           "format": "float",
           "description": "Human Health Particulate (and secondary particulate matter precursors) Potentials for Air Emissions (PM2.5eq)",
-          "example": 0.06329466662034357
+          "example": 0.03
         },
         "eutrophication_air": {
           "type": "number",
           "format": "float",
           "description": "Eutrophication Potentials for Air Emissions (kg N eq)",
-          "example": 0.022750238471880218
-        },
-        "eutrophication_water": {
-          "type": "number",
-          "format": "float",
-          "description": "Eutrophication Potentials for Water Emissions (kg N eq)",
-          "example": 0.14948786537116643
+          "example": 0.03
         },
         "smog_air": {
           "type": "number",
           "format": "float",
           "description": "Smog Formation Potentials for Air Emissions (kg O3 eq)",
-          "example": 16.220246889516314
+          "example": 14.68
         }
       },
       "xml": {
