@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "description": "This is a service for running LCA, funded by California Energy Commission",
-    "version": "1.5.3",
+    "version": "1.6.0",
     "title": "Life Cycle Assessment",
     "contact": {
       "email": "kkyli@ucdavis.edu"
