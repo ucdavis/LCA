@@ -170,8 +170,10 @@ const computePollutantEmission = (pollutant: Lci, params: LcaInputs) => {
   let pollutantEmission =
     pollutant.diesel * params.diesel +
     pollutant.gasoline * params.gasoline +
-    pollutant.kerosene * params.jetfuel +
-    pollutant.transport * params.distance;
+    pollutant.jetfuel * params.jetfuel +
+    pollutant.transport * params.distance +
+    pollutant.construction * params.construction +
+    pollutant.equipment * params.equipment;
 
   switch (params.technology) {
     case GENERIC_POWER_ONLY:

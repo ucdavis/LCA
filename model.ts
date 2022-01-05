@@ -4,6 +4,8 @@ export interface LcaInputs {
   gasoline: number; // gal/kWh electricity
   jetfuel: number; // gal/kWh electricity
   distance: number; // mile/kWh electricity
+  construction: number; // thousand dollars/kWh electricity
+  equipment: number; // thousand dollars/kWh electricity
 }
 
 export interface LcaOutputs {
@@ -20,8 +22,10 @@ export interface Lci {
   gp: number; // gasfication power - 1kWh electricity
   diesel: number; // 1 gal
   gasoline: number; // 1 gal
-  kerosene: number; // 1 gal
+  jetfuel: number; // 1 gal
   transport: number; // 1 mile
+  construction: number; // 1 thousand dollars
+  equipment: number; // 1 thousand dollars
 }
 
 export interface Traci {
