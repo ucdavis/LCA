@@ -1,12 +1,6 @@
 import { readFileSync } from 'fs';
 import { parse } from 'papaparse';
-import {
-  LcaOutputs,
-  Lci,
-  LifeCycleEmissions,
-  LifeCycleImpacts,
-  Traci,
-} from './model';
+import { LcaOutputs, Lci, LifeCycleEmissions, LifeCycleImpacts, Traci } from './model';
 import { LcaInputs } from './model';
 
 const path = require('path');
@@ -15,9 +9,7 @@ const GENERIC_POWER_ONLY = 'GPO';
 const COMBINED_HEAT_POWER = 'CHP';
 const GASIFICATION_POWER = 'GP';
 
-export const lifeCycleAnalysis = async (
-  params: LcaInputs
-): Promise<LcaOutputs> => {
+export const lifeCycleAnalysis = async (params: LcaInputs): Promise<LcaOutputs> => {
   const lcaOutputs: LcaOutputs = {
     lifeCycleEmissions: {
       CO2: 0,
@@ -36,7 +28,6 @@ export const lifeCycleAnalysis = async (
       acidification_air: 0,
       hh_particulate_air: 0,
       eutrophication_air: 0,
-      eutrophication_water: 0,
       smog_air: 0,
     },
   };
@@ -66,10 +57,7 @@ export const lifeCycleAnalysis = async (
   traci = data;
 
   const lifeCycleEmissions = await computeLifeCycleEmissions(lci, params);
-  const lifeCycleImpacts = await computeLifeCycleImpacts(
-    traci,
-    lifeCycleEmissions
-  );
+  const lifeCycleImpacts = await computeLifeCycleImpacts(traci, lifeCycleEmissions);
 
   lcaOutputs.lifeCycleEmissions = lifeCycleEmissions;
   lcaOutputs.lifeCycleImpacts = lifeCycleImpacts;
@@ -131,8 +119,8 @@ const computeLifeCycleEmissions = async (
   const carbonRatioCO2 = 12 / 44;
   const gwpVOC = carbonRatioVOC / carbonRatioCO2;
   const gwpCO = carbonRatioCO / carbonRatioCO2;
-  const gwpCH4 = 25;
-  const gwpN2O = 298;
+  const gwpCH4 = 28; // IPCC AR5 standard
+  const gwpN2O = 265; // IPCC AR5 standard
 
   lifeCycleEmissions.CI =
     (lifeCycleEmissions.CO / 1000) * gwpCO +
@@ -152,7 +140,6 @@ const computeLifeCycleImpacts = async (
     acidification_air: 0,
     hh_particulate_air: 0,
     eutrophication_air: 0,
-    eutrophication_water: 0,
     smog_air: 0,
   };
 
@@ -163,24 +150,16 @@ const computeLifeCycleImpacts = async (
     lifeCycleEmissions.CO / 1000,
     lifeCycleEmissions.NOx / 1000,
     lifeCycleEmissions.PM10 / 1000,
-    lifeCycleEmissions.PM25 / 1000,
     lifeCycleEmissions.SOx / 1000,
-    lifeCycleEmissions.VOC / 1000,
   ];
 
   let substanceTotal;
   for (let i = 0; i < lifeCycleEmissionsKg.length; i++) {
     substanceTotal = lifeCycleEmissionsKg[i];
-    lifeCycleImpacts.global_warming_air +=
-      substanceTotal * traci[i].global_warming_air;
-    lifeCycleImpacts.acidification_air +=
-      substanceTotal * traci[i].acidification_air;
-    lifeCycleImpacts.hh_particulate_air +=
-      substanceTotal * traci[i].hh_particulate_air;
-    lifeCycleImpacts.eutrophication_air +=
-      substanceTotal * traci[i].eutrophication_air;
-    lifeCycleImpacts.eutrophication_water +=
-      substanceTotal * traci[i].eutrophication_water;
+    lifeCycleImpacts.global_warming_air += substanceTotal * traci[i].global_warming_air;
+    lifeCycleImpacts.acidification_air += substanceTotal * traci[i].acidification_air;
+    lifeCycleImpacts.hh_particulate_air += substanceTotal * traci[i].hh_particulate_air;
+    lifeCycleImpacts.eutrophication_air += substanceTotal * traci[i].eutrophication_air;
     lifeCycleImpacts.smog_air += substanceTotal * traci[i].smog_air;
   }
 
@@ -191,8 +170,10 @@ const computePollutantEmission = (pollutant: Lci, params: LcaInputs) => {
   let pollutantEmission =
     pollutant.diesel * params.diesel +
     pollutant.gasoline * params.gasoline +
-    pollutant.kerosene * params.jetfuel +
-    pollutant.transport * params.distance;
+    pollutant.jetfuel * params.jetfuel +
+    pollutant.transport * params.distance +
+    pollutant.construction * params.construction +
+    pollutant.equipment * params.equipment;
 
   switch (params.technology) {
     case GENERIC_POWER_ONLY:

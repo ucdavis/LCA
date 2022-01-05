@@ -4,6 +4,8 @@ export interface LcaInputs {
   gasoline: number; // gal/kWh electricity
   jetfuel: number; // gal/kWh electricity
   distance: number; // mile/kWh electricity
+  construction: number; // thousand dollars/kWh electricity
+  equipment: number; // thousand dollars/kWh electricity
 }
 
 export interface LcaOutputs {
@@ -20,8 +22,10 @@ export interface Lci {
   gp: number; // gasfication power - 1kWh electricity
   diesel: number; // 1 gal
   gasoline: number; // 1 gal
-  kerosene: number; // 1 gal
+  jetfuel: number; // 1 gal
   transport: number; // 1 mile
+  construction: number; // 1 thousand dollars
+  equipment: number; // 1 thousand dollars
 }
 
 export interface Traci {
@@ -31,7 +35,6 @@ export interface Traci {
   acidification_air: number; // Acidification Air (kg SO2 eq / kg substance)
   hh_particulate_air: number; // HH Particulate Air (PM2.5 eq / kg substance)
   eutrophication_air: number; // Eutrophication Air (kg N eq / kg substance)
-  eutrophication_water: number; // Eutrophication Water (kg N eq / kg substance)
   smog_air: number; // Smog Air (kg O3 eq / kg substance)
 }
 
@@ -53,6 +56,5 @@ export interface LifeCycleImpacts {
   acidification_air: number; // Acidification Air (kg SO2 eq)
   hh_particulate_air: number; // HH Particulate Air (PM2.5 eq)
   eutrophication_air: number; // Eutrophication Air (kg N eq)
-  eutrophication_water: number; // Eutrophication Water (kg N eq)
   smog_air: number; // Smog Air (kg O3 eq)
 }
