@@ -31,7 +31,6 @@ export interface Traci {
   acidification_air: number; // Acidification Air (kg SO2 eq / kg substance)
   hh_particulate_air: number; // HH Particulate Air (PM2.5 eq / kg substance)
   eutrophication_air: number; // Eutrophication Air (kg N eq / kg substance)
-  eutrophication_water: number; // Eutrophication Water (kg N eq / kg substance)
   smog_air: number; // Smog Air (kg O3 eq / kg substance)
 }
 
@@ -53,6 +52,5 @@ export interface LifeCycleImpacts {
   acidification_air: number; // Acidification Air (kg SO2 eq)
   hh_particulate_air: number; // HH Particulate Air (PM2.5 eq)
   eutrophication_air: number; // Eutrophication Air (kg N eq)
-  eutrophication_water: number; // Eutrophication Water (kg N eq)
   smog_air: number; // Smog Air (kg O3 eq)
 }
