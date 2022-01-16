@@ -1,6 +1,6 @@
 {
   "name": "@ucdavis/lca",
-  "version": "1.6.1",
+  "version": "1.6.2",
   "description": "Life cycle assessment of the utilization of woody biomass for electricity generation",
   "main": "index.js",
   "repository": {
