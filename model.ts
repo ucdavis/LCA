@@ -11,6 +11,8 @@ export interface LcaInputs {
 export interface LcaOutputs {
   lifeCycleEmissions: LifeCycleEmissions;
   lifeCycleImpacts: LifeCycleImpacts;
+  lifeStageCO2: LifeStage;
+  lifeStageGWP: LifeStage;
 }
 
 export interface Lci {
@@ -49,6 +51,14 @@ export interface LifeCycleEmissions {
   SOx: number; // g
   VOC: number; // g
   CI: number; // Carbon Intensity (kg CO2e)
+}
+
+export interface LifeStage {
+  harvest: number; // all units are kg
+  transport: number;
+  conversion: number;
+  construction: number;
+  equipment: number;
 }
 
 export interface LifeCycleImpacts {

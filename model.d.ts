@@ -10,6 +10,8 @@ export interface LcaInputs {
 export interface LcaOutputs {
     lifeCycleEmissions: LifeCycleEmissions;
     lifeCycleImpacts: LifeCycleImpacts;
+    lifeStageCO2: LifeStage;
+    lifeStageGWP: LifeStage;
 }
 export interface Lci {
     index: number;
@@ -45,6 +47,13 @@ export interface LifeCycleEmissions {
     SOx: number;
     VOC: number;
     CI: number;
+}
+export interface LifeStage {
+    harvest: number;
+    transport: number;
+    conversion: number;
+    construction: number;
+    equipment: number;
 }
 export interface LifeCycleImpacts {
     global_warming_air: number;
