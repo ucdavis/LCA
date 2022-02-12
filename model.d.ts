@@ -1,6 +1,7 @@
 export interface LcaInputs {
     technology: string;
-    diesel: number;
+    harvestDiesel: number;
+    unloadDiesel: number;
     gasoline: number;
     jetfuel: number;
     distance: number;

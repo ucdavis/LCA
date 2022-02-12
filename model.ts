@@ -1,6 +1,6 @@
 export interface LcaInputs {
   technology: string; // conversion technology
-  diesel: number; // gal/kWh electricity
+  harvestDiesel: number; // gal/kWh electricity
   unloadDiesel: number; // gal/kWh electricity
   gasoline: number; // gal/kWh electricity
   jetfuel: number; // gal/kWh electricity
