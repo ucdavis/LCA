@@ -31,8 +31,8 @@
             "default": "CHP"
           },
           {
-            "name": "diesel",
-            "description": "Diesel consumption (gal/kWh electricity generated)",
+            "name": "harvestDiesel",
+            "description": "Diesel consumption during harvest stage (gal/kWh electricity generated)",
             "in": "query",
             "required": true,
             "type": "number",
@@ -61,6 +61,14 @@
             "required": true,
             "type": "number",
             "default": 20
+          },
+          {
+            "name": "unloadDiesel",
+            "description": "Diesel consumption during unloading process (gal/kWh electricity generated)",
+            "in": "query",
+            "required": true,
+            "type": "number",
+            "default": 0
           },
           {
             "name": "construction",
