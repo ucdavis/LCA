@@ -160,7 +160,8 @@ const computeLifeCycleImpacts = async (traci: Traci[], lcaOutputs: LcaOutputs): 
 
 const computePollutantEmission = (pollutant: Lci, params: LcaInputs, lcaOutputs: LcaOutputs) => {
   let pollutantEmission =
-    pollutant.diesel * params.diesel +
+    pollutant.diesel * params.harvestDiesel +
+    pollutant.diesel * params.unloadDiesel +
     pollutant.gasoline * params.gasoline +
     pollutant.jetfuel * params.jetfuel +
     pollutant.transport * params.distance +
@@ -170,30 +171,33 @@ const computePollutantEmission = (pollutant: Lci, params: LcaInputs, lcaOutputs:
   switch (pollutant.name) {
     case 'CO2':
       lcaOutputs.lifeStageCO2.harvest =
-        pollutant.diesel * params.diesel +
+        pollutant.diesel * params.harvestDiesel +
         pollutant.gasoline * params.gasoline +
         pollutant.jetfuel * params.jetfuel;
-      lcaOutputs.lifeStageCO2.transport = pollutant.transport * params.distance;
+      lcaOutputs.lifeStageCO2.transport =
+        pollutant.transport * params.distance + pollutant.diesel * params.unloadDiesel;
       lcaOutputs.lifeStageCO2.construction = pollutant.construction * params.construction;
       lcaOutputs.lifeStageCO2.equipment = pollutant.equipment * params.equipment;
 
       lcaOutputs.lifeStageGWP.harvest +=
-        pollutant.diesel * params.diesel +
+        pollutant.diesel * params.harvestDiesel +
         pollutant.gasoline * params.gasoline +
         pollutant.jetfuel * params.jetfuel;
-      lcaOutputs.lifeStageGWP.transport += pollutant.transport * params.distance;
+      lcaOutputs.lifeStageGWP.transport +=
+        pollutant.transport * params.distance + pollutant.diesel * params.unloadDiesel;
       lcaOutputs.lifeStageGWP.construction += pollutant.construction * params.construction;
       lcaOutputs.lifeStageGWP.equipment += pollutant.equipment * params.equipment;
       break;
     case 'CH4':
       lcaOutputs.lifeStageGWP.harvest +=
-        ((pollutant.diesel * params.diesel +
+        ((pollutant.diesel * params.harvestDiesel +
           pollutant.gasoline * params.gasoline +
           pollutant.jetfuel * params.jetfuel) /
           1000) *
         GWP_CF.CH4;
       lcaOutputs.lifeStageGWP.transport +=
-        ((pollutant.transport * params.distance) / 1000) * GWP_CF.CH4;
+        ((pollutant.transport * params.distance + pollutant.diesel * params.unloadDiesel) / 1000) *
+        GWP_CF.CH4;
       lcaOutputs.lifeStageGWP.construction +=
         ((pollutant.construction * params.construction) / 1000) * GWP_CF.CH4;
       lcaOutputs.lifeStageGWP.equipment +=
@@ -201,13 +205,14 @@ const computePollutantEmission = (pollutant: Lci, params: LcaInputs, lcaOutputs:
       break;
     case 'N2O':
       lcaOutputs.lifeStageGWP.harvest +=
-        ((pollutant.diesel * params.diesel +
+        ((pollutant.diesel * params.harvestDiesel +
           pollutant.gasoline * params.gasoline +
           pollutant.jetfuel * params.jetfuel) /
           1000) *
         GWP_CF.N2O;
       lcaOutputs.lifeStageGWP.transport +=
-        ((pollutant.transport * params.distance) / 1000) * GWP_CF.N2O;
+        ((pollutant.transport * params.distance + pollutant.diesel * params.unloadDiesel) / 1000) *
+        GWP_CF.N2O;
       lcaOutputs.lifeStageGWP.construction +=
         ((pollutant.construction * params.construction) / 1000) * GWP_CF.N2O;
       lcaOutputs.lifeStageGWP.equipment +=
