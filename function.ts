@@ -1,6 +1,6 @@
 import { readFileSync } from 'fs';
 import { parse } from 'papaparse';
-import { LcaOutputs, Lci, LifeCycleEmissions, LifeCycleImpacts, LifeStage, Traci } from './model';
+import { LcaOutputs, Lci, Traci } from './model';
 import { LcaInputs } from './model';
 
 const path = require('path');
@@ -12,7 +12,7 @@ const GASIFICATION_POWER = 'GP';
 const GWP_CF = {
   // Global warming potential characterization factors (IPCC AR5 standard)
   CO2: 1,
-  CH4: 28,
+  CH4: 30, // fossil methane
   N2O: 265,
 };
 

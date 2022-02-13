@@ -1,6 +1,6 @@
 ﻿index,name,global_warming_air,acidification_air,hh_particulate_air,eutrophication_air,smog_air
 1,CO2,1,0,0,0,0
-2,CH4,28,0,0,0,0.014379487
+2,CH4,30,0,0,0,0.014379487
 3,N2O,265,0,0,0,0
 4,CO,0,0,0.000355556,0,0.055622308
 5,NOx,0,0.7,0.007222222,0.04429,24.79358974
