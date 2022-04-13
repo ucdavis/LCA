@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "description": "This is a service for running LCA, funded by California Energy Commission",
+    "description": "LCA is developed for estimating the life cycle emissions from utilizing forest resources for electricity generation",
     "version": "1.6.2",
     "title": "Life Cycle Assessment",
     "contact": {
